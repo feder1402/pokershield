@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useParams } from "next/navigation"
 import { useRoomStore } from "@/lib/room-store"
 import { ESTIMATION_SCALES, getScaleValues, getScaleById } from "@/lib/estimation-scales"
@@ -176,6 +177,7 @@ export default function RoomPage() {
                 <Users className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm text-muted-foreground">{room.participants.length} participants</span>
               </div>
+              <ThemeToggle />
               {currentParticipant?.isModerator && (
                 <>
                   <Badge variant="secondary">Moderator</Badge>
