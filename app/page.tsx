@@ -85,7 +85,7 @@ export default function HomePage() {
             <Card className="p-6 hover:bg-accent/50 transition-colors">
               <CardContent className="p-0">
                 <h3 className="text-xl font-semibold mb-3">Join Existing Room</h3>
-                <p className="text-muted-foreground mb-4">Enter a room ID to join your team's estimation session</p>
+                <p className="text-muted-foreground mb-4">Enter a room ID to join your team&apos;s estimation session</p>
                 <div className="flex gap-2">
                   <Input
                     placeholder="Enter room ID"

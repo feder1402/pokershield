@@ -8,14 +8,13 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useParams, useRouter } from "next/navigation"
+import { useParams } from "next/navigation"
 import { useRoomStore } from "@/lib/room-store"
 import { ESTIMATION_SCALES, getScaleValues, getScaleById } from "@/lib/estimation-scales"
 import Link from "next/link"
 
 export default function RoomPage() {
   const params = useParams()
-  const router = useRouter()
   const roomId = params.roomId as string
 
   const [copied, setCopied] = useState(false)
@@ -35,7 +34,6 @@ export default function RoomPage() {
     setEstimationScale,
     setCurrentStory: updateCurrentStory,
     leaveRoom,
-    currentUserId,
   } = useRoomStore()
 
   const room = getRoom(roomId)
@@ -114,7 +112,7 @@ export default function RoomPage() {
           <CardContent className="p-6 text-center">
             <Shield className="h-12 w-12 text-primary mx-auto mb-4" />
             <h1 className="text-2xl font-bold mb-2">Room Not Found</h1>
-            <p className="text-muted-foreground mb-4">Room {roomId} doesn't exist or has been closed.</p>
+            <p className="text-muted-foreground mb-4">Room {roomId} doesn&apos;t exist or has been closed.</p>
             <Link href="/">
               <Button className="w-full">
                 <ArrowLeft className="h-4 w-4 mr-2" />
@@ -367,7 +365,7 @@ export default function RoomPage() {
                 </span>
               </div>
             ) : (
-              <p className="text-muted-foreground">You haven't voted yet</p>
+              <p className="text-muted-foreground">You haven&apos;t voted yet</p>
             )}
           </div>
 
