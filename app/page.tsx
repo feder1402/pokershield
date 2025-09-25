@@ -5,6 +5,7 @@ import { Shield, Users, Zap, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useRoomStore } from "@/lib/room-store"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
@@ -56,7 +57,12 @@ export default function HomePage() {
             <Link href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
               How it Works
             </Link>
+            <ThemeToggle />
           </nav>
+          {/* Mobile theme toggle */}
+          <div className="md:hidden">
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
