@@ -10,7 +10,7 @@ import { useRoomStore } from "@/lib/room-store";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 
 export default function HomePage() {
   const [roomIdInput, setRoomIdInput] = useState("");
@@ -18,10 +18,11 @@ export default function HomePage() {
 
   const { createRoom, getRoom } = useRoomStore();
   const router = useRouter();
+  const createRoomMutation = useMutation(api.rooms.createRoom);
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     setIsCreating(true);
-    const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const roomId = await createRoomMutation({ name: "Room 1" });
     createRoom(roomId);
 
     setTimeout(() => {

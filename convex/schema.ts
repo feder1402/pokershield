@@ -4,10 +4,10 @@ import { v } from "convex/values";
 export default defineSchema({
   participants: defineTable({
     name: v.string(),
-    roomId: v.id("rooms"),
+    roomId: v.optional(v.id("rooms")),
   }),
   rooms: defineTable({
-    moderator_id: v.string(),
-    name: v.string(),
+    moderator_id: v.optional(v.string()),
+    name: v.optional(v.string()),
   }),
 });
