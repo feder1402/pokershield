@@ -1,0 +1,47 @@
+---
+globs: *.ts,*.tsx
+---
+
+# Code Quality Standards
+
+## TypeScript
+- Use strict TypeScript configuration
+- Define proper interfaces for all data structures
+- Avoid `any` type - use proper typing
+- Use type assertions sparingly and with proper checks
+
+## Code Organization
+- Keep components under 200 lines when possible
+- Extract reusable logic into custom hooks
+- Separate business logic from UI components
+- Use proper file naming conventions (PascalCase for components)
+
+## Performance
+- Use React.memo for expensive components
+- Implement proper dependency arrays in useEffect
+- Avoid unnecessary re-renders
+- Use useCallback for event handlers passed to children
+
+## Error Handling
+- Implement proper error boundaries
+- Handle async operations with try-catch
+- Provide user-friendly error messages
+- Validate user inputs
+
+## Accessibility
+- Use semantic HTML elements
+- Provide proper ARIA labels
+- Ensure keyboard navigation works
+- Maintain color contrast ratios
+
+## Testing Considerations
+- Write testable components
+- Separate pure functions from side effects
+- Use proper mocking for external dependencies
+- Test user interactions and edge cases
+
+## Documentation
+- Add JSDoc comments for complex functions
+- Document component props with TypeScript interfaces
+- Keep README updated with setup instructions
+- Document any breaking changes
