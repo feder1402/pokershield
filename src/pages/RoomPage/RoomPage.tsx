@@ -139,7 +139,6 @@ export default function RoomPage() {
 
           <ParticipantsList
             room={room}
-            currentParticipant={currentParticipant}
           />
 
           <ModeratorControls
