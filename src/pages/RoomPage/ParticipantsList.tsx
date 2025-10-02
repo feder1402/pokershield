@@ -5,9 +5,7 @@ interface ParticipantsListProps {
   room: Room;
 }
 
-export function ParticipantsList({
-  room,
-}: ParticipantsListProps) {
+export function ParticipantsList({ room }: ParticipantsListProps) {
   return (
     <div className="mb-8">
       <h2 className="text-lg font-semibold mb-4 text-center">Participants</h2>
@@ -15,14 +13,10 @@ export function ParticipantsList({
         {room.participants.map((participant) => (
           <Card key={participant.id} className="text-center">
             <CardContent className="p-4">
-              {participant.hasVoted ? (
-                room.votesRevealed && participant.vote ? (
-                  <span className="text-xl font-bold">{participant.vote}</span>
-                ) : (
-                  <div className="w-12 h-16 bg-primary rounded-md"></div>
-                )
+              {room.votesRevealed && participant.vote ? (
+                <span className="text-xl font-bold">{participant.vote}</span>
               ) : (
-                <span className="text-xs text-muted-foreground">No vote</span>
+                <div className="w-12 h-16 bg-primary rounded-md"></div>
               )}
             </CardContent>
           </Card>

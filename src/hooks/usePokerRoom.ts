@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Id } from "convex/_generated/dataModel";
-import { useLocalStorage } from "@uidotdev/usehooks";
 import useParticipant from "./useParticipant";
 
 export default function usePokerRoom() {
@@ -16,8 +13,9 @@ export default function usePokerRoom() {
   console.log("usePokerRoom: roomName", roomName, "sessioniId", sessionId);
 
   const room = roomName ? useQuery(api.rooms.getRoom, { roomName }) : null;
-  const voteEnabled = room?.voting;
+  const isVotingEnabled = room?.isVotingEnabled;
   const isModerator = room?.moderator === sessionId;
+  const numberOfParticipants = room?.numberOfParticipants;
 
-  return {roomName, sessionId, isModerator, voteEnabled, vote};
+  return {roomName, sessionId, isModerator, isVotingEnabled, vote, numberOfParticipants};
 }

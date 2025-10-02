@@ -1,143 +1,68 @@
-import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
-import { useRoomStore } from "@/lib/room-store"
-import { RoomHeader } from "./RoomHeader"
-import { StorySection } from "./StorySection"
-import { VotingCards } from "./VotingCards"
-import { ParticipantsList } from "./ParticipantsList"
-import { ModeratorControls } from "./ModeratorControls"
-import { VotingResults } from "./VotingResults"
-import { JoinRoomCard } from "./JoinRoomCard"
-import { RoomNotFoundCard } from "./RoomNotFoundCard"
+import { RoomHeader } from "./RoomHeader";
+import { RoomNotFoundCard } from "./RoomNotFoundCard";
+import usePokerRoom from "@/hooks/usePokerRoom";
+import { VotingCards } from "./VotingCards";
+import { Button } from "@/components/ui/button";
+import { RotateCcw, Eye, Check } from "lucide-react";
 
 export default function RoomPage() {
-  const params = useParams()
-  const roomId = params.roomId as string
-
-  const [copied, setCopied] = useState(false)
-  const [hasJoined, setHasJoined] = useState(false)
-  const [currentStory, setCurrentStory] = useState("")
-  const [isEditingStory, setIsEditingStory] = useState(false)
-  const [showSettings, setShowSettings] = useState(false)
-  const [isClient, setIsClient] = useState(false)
-
   const {
-    getRoom,
-    getCurrentParticipant,
-    joinRoom,
-    castVote,
-    revealVotes,
-    resetVotes,
-    setEstimationScale,
-    setCurrentStory: updateCurrentStory,
-    leaveRoom,
-  } = useRoomStore()
-
-  const room = getRoom(roomId)
-  const currentParticipant = getCurrentParticipant(roomId)
-
-  useEffect(() => {
-    setIsClient(true)
-    if (room && currentParticipant) {
-      setHasJoined(true)
-      setCurrentStory(room.currentStory || "")
-    }
-  }, [room, currentParticipant])
-
-  const handleJoinRoom = () => {
-    joinRoom(roomId)
-    setHasJoined(true)
-  }
+    roomName,
+    numberOfParticipants,
+    isModerator,
+    sessionId,
+    isVotingEnabled,
+  } = usePokerRoom();
 
   const handleVote = (vote: string) => {
-    if (!currentParticipant || room?.votesRevealed) return
-    castVote(roomId, currentParticipant.id, vote)
-  }
+    console.log("Voted: ", vote);
+  };
 
   const handleReveal = () => {
-    if (!currentParticipant?.isModerator) return
-    revealVotes(roomId)
+    console.log('Revealed')
   }
 
   const handleReset = () => {
-    if (!currentParticipant?.isModerator) return
-    resetVotes(roomId)
+    console.log('Reset')
   }
 
-  const handleScaleChange = (scale: string) => {
-    // Updated parameter type
-    if (!currentParticipant?.isModerator) return
-    setEstimationScale(roomId, scale)
-  }
-
-  const handleStoryUpdate = () => {
-    if (!currentParticipant?.isModerator) return
-    updateCurrentStory(roomId, currentStory)
-    setIsEditingStory(false)
-  }
-
-  const handleStoryChange = (story: string) => {
-    setCurrentStory(story)
-  }
-
-  const handleEditToggle = () => {
-    setIsEditingStory(!isEditingStory)
-  }
-
-  const handleRemoveParticipant = (participantId: string) => {
-    if (!currentParticipant?.isModerator || participantId === currentParticipant.id) return
-    leaveRoom(roomId, participantId)
-  }
-
-  const copyRoomUrl = async () => {
-    const url = window.location.href
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-
-  if (!room) {
-    return <RoomNotFoundCard roomId={roomId} />
-  }
-
-  if (!isClient || !hasJoined) {
-    return <JoinRoomCard roomId={roomId} onJoinRoom={handleJoinRoom} />
+  if (roomName === undefined || sessionId === undefined) {
+    return <RoomNotFoundCard />;
   }
 
   return (
     <div className="min-h-screen bg-background grid-bg">
       <RoomHeader
-        room={room}
-        roomId={roomId}
-        currentParticipant={currentParticipant}
-        copied={copied}
-        showSettings={showSettings}
-        onCopyRoomUrl={copyRoomUrl}
-        onScaleChange={handleScaleChange}
-        onRemoveParticipant={handleRemoveParticipant}
-        setShowSettings={setShowSettings}
+        numberOfParticipants={numberOfParticipants || 0}
+        roomName={roomName || ""}
+        isVotingEnabled={isVotingEnabled || false}
+        isModerator={isModerator}
+        showSettings={false}
+        onScaleChange={() => {}}
+        setShowSettings={() => {}}
       />
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <StorySection
-            room={room}
-            currentParticipant={currentParticipant}
-            currentStory={currentStory}
-            isEditingStory={isEditingStory}
-            onStoryChange={handleStoryChange}
-            onStoryUpdate={handleStoryUpdate}
-            onEditToggle={handleEditToggle}
-          />
-
           <VotingCards
-            room={room}
-            currentParticipant={currentParticipant}
+            isVotingEnabled={isVotingEnabled || false}
             onVote={handleVote}
           />
+          
+          {isModerator && (
+        <div className="flex justify-center gap-4">
+          <Button onClick={handleReset} variant="outline" className="flex items-center gap-2 bg-transparent">
+            <RotateCcw className="h-4 w-4" />
+            Reset Votes
+          </Button>
+          <Button onClick={handleReveal} disabled={!isVotingEnabled} className="flex items-center gap-2">
+            <Eye className="h-4 w-4" />
+            Reveal Votes
+          </Button>
+        </div>
+      )}
 
-          <ParticipantsList
+          {/*<ParticipantsList
             room={room}
           />
 
@@ -148,9 +73,9 @@ export default function RoomPage() {
             onReveal={handleReveal}
           />
 
-          <VotingResults room={room} />
+          <VotingResults room={room} /> */}
         </div>
       </main>
     </div>
-  )
+  );
 }

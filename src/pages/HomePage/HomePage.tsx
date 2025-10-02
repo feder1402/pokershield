@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useRoomStore } from "@/lib/room-store"
 import { useNavigate } from "react-router-dom"
 import { Header } from "./Header"
@@ -7,21 +6,23 @@ import { CreateRoomCard } from "./CreateRoomCard"
 import { FeaturesSection } from "./FeaturesSection"
 import { HowItWorks } from "./HowItWorks"
 import { Footer } from "./Footer"
+import { useMutation } from "convex/react"
+import { api } from "../../../convex/_generated/api"
+import { petNameUrlGenerator } from "@/lib/pet_name_url_generator"
 
 export default function HomePage() {
-  const [isCreating, setIsCreating] = useState(false)
 
-  const { createRoom } = useRoomStore()
-  const navigate = useNavigate()
+  // const { createRoom } = useRoomStore()
+  // createRoom("101")
+
+  const navigate = useNavigate();
+  const createRoomMutation = useMutation(api.rooms.createRoom);
 
   const handleCreateRoom = () => {
-    setIsCreating(true)
-    const roomId = Math.random().toString(36).substring(2, 8).toUpperCase()
-    createRoom(roomId)
-
-    setTimeout(() => {
-      navigate(`/room/${roomId}`)
-    }, 100)
+    const roomName = petNameUrlGenerator();
+      createRoomMutation({roomName }).then(() => {
+          navigate(`/room/${roomName}`);
+      });
   }
 
   return (
@@ -32,7 +33,6 @@ export default function HomePage() {
         <HeroSection>
           <CreateRoomCard
             onCreateRoom={handleCreateRoom}
-            isCreating={isCreating}
           />
           <FeaturesSection />
           <HowItWorks />

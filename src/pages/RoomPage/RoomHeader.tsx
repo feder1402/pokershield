@@ -1,38 +1,42 @@
-import { Shield, Users, Copy, Check, Settings, UserX } from "lucide-react"
+import { Shield, Users, Copy, Check, Settings, PartyPopper } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Link } from "react-router-dom"
-import { Room, Participant } from "@/lib/room-store"
 import { ESTIMATION_SCALES, getScaleById } from "@/lib/estimation-scales"
+import { useState } from "react"
 
 interface RoomHeaderProps {
-  room: Room
-  roomId: string
-  currentParticipant: Participant | undefined
-  copied: boolean
+  numberOfParticipants: number
+  roomName: string
+  isVotingEnabled: boolean
+  isModerator: boolean
   showSettings: boolean
-  onCopyRoomUrl: () => void
   onScaleChange: (scale: string) => void
-  onRemoveParticipant: (participantId: string) => void
   setShowSettings: (show: boolean) => void
 }
 
 export function RoomHeader({
-  room,
-  roomId,
-  currentParticipant,
-  copied,
+  numberOfParticipants,
+  roomName,
+  isVotingEnabled,
+  isModerator,
   showSettings,
-  onCopyRoomUrl,
   onScaleChange,
-  onRemoveParticipant,
   setShowSettings
 }: RoomHeaderProps) {
-  const currentScaleInfo = getScaleById(room.estimationScale)
+  const currentScaleInfo = getScaleById('fibonacci')
 
+  const [copied, setCopied] = useState(false)
+  
+  const onCopyRoomUrl = async () => {
+    const url = window.location.href
+    await navigator.clipboard.writeText(url)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
   return (
     <header className="border-b border-border">
       <div className="container mx-auto px-4 py-4">
@@ -44,7 +48,7 @@ export function RoomHeader({
             </Link>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Room:</span>
-              <code className="bg-muted px-2 py-1 rounded text-sm font-mono">{roomId}</code>
+              <code className="bg-muted px-2 py-1 rounded text-sm font-mono">{roomName}</code>
               <Button variant="ghost" size="sm" onClick={onCopyRoomUrl} className="h-8 w-8 p-0">
                 {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               </Button>
@@ -52,12 +56,18 @@ export function RoomHeader({
           </div>
 
           <div className="flex items-center gap-4">
+            {isVotingEnabled && (
+              <div className="flex items-center gap-2">
+                <PartyPopper className="h-4 w-4 text-foreground" size={20}/>
+                <span className="text-md text-foreground font-bold">Voting Enabled</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">{room.participants.length} participants</span>
+              <span className="text-sm text-muted-foreground">{numberOfParticipants} participants</span>
             </div>
             <ThemeToggle />
-            {currentParticipant?.isModerator && (
+            {isModerator && (
               <>
                 <Badge variant="secondary">Moderator</Badge>
                 <Dialog open={showSettings} onOpenChange={setShowSettings}>
@@ -73,7 +83,7 @@ export function RoomHeader({
                     <div className="space-y-6">
                       <div>
                         <h4 className="text-sm font-medium mb-3">Estimation Scale</h4>
-                        <Select value={room.estimationScale} onValueChange={onScaleChange}>
+                        <Select value='fibonacci' onValueChange={onScaleChange}>
                           <SelectTrigger>
                             <SelectValue />
                           </SelectTrigger>
@@ -98,7 +108,7 @@ export function RoomHeader({
                       <div>
                         <h4 className="text-sm font-medium mb-3">Participants</h4>
                         <div className="space-y-2 max-h-40 overflow-y-auto">
-                          {room.participants.map((participant) => (
+                          {/* {[].map((participant) => (
                             <div
                               key={participant.id}
                               className="flex items-center justify-between p-2 bg-muted rounded"
@@ -124,7 +134,7 @@ export function RoomHeader({
                                 </Button>
                               )}
                             </div>
-                          ))}
+                          ))} */}
                         </div>
                       </div>
                     </div>
@@ -138,3 +148,4 @@ export function RoomHeader({
     </header>
   )
 }
+

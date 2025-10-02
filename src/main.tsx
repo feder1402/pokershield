@@ -1,13 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import App from './App'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
+const address = import.meta.env.VITE_CONVEX_URL;
+
+const convex = new ConvexReactClient(address);
+
+createRoot(document.getElementById("root")!).render(
+  <BrowserRouter>
+    <ConvexProvider client={convex}>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-)
+    </ConvexProvider>
+  </BrowserRouter>
+);

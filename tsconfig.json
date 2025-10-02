@@ -23,9 +23,11 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/convex/*": ["./convex/*"],
+      "@/*": ["./src/*"],
     }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["./src", "vite.config.ts", "convex", "vite-env.d.ts"],
+  
+"references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -9,9 +9,12 @@ export const createParticipant = mutation({
       .query("rooms")
       .withIndex("by_name", (q) => q.eq("name", args.roomName))
       .first();
+
     if (!room) {
-      throw new Error(`Room "${args.roomName}" not found`);
+      return { participantId: undefined, isModerator: false };
     }
+
+    await ctx.db.patch(room._id, { numberOfParticipants: room.numberOfParticipants + 1 });
 
     const participantId = await ctx.db.insert("participants", { roomId: room._id });
     

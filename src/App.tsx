@@ -7,13 +7,13 @@ function App() {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
+      defaultTheme="dark"
       enableSystem
       disableTransitionOnChange
     >
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/room/:roomId" element={<RoomPage />} />
+        <Route path="/room/:roomName" element={<RoomPage />} />
       </Routes>
     </ThemeProvider>
   )
