@@ -45,14 +45,14 @@ export function PokerCard({
         "border-2 border-border",
         "shadow-md",
         // Hover state
-        !disabled && !selected && "hover:border-primary hover:shadow-lg hover:-translate-y-1",
+        !disabled && !selected && "hover:border-primary hover:shadow-lg hover:-translate-y-1 hover:bg-secondary/90",
         // Selected state
         selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
         // Disabled state
-        disabled && "opacity-50 cursor-not-allowed",
+        disabled && "opacity-50 cursor-arrow bg-card text-card-foreground",
         // Focus state
         !disabled &&
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer",
         className,
       )}
       aria-pressed={selected}
@@ -61,7 +61,7 @@ export function PokerCard({
       <span className={cn("select-none", textSizeClasses[size])}>{value}</span>
 
       {/* Corner decorations for poker card aesthetic */}
-      <span
+      {/* <span
         className={cn(
           "absolute top-2 left-2 text-xs font-semibold",
           selected ? "text-primary-foreground" : "text-muted-foreground",
@@ -76,7 +76,7 @@ export function PokerCard({
         )}
       >
         {value}
-      </span>
+      </span> */}
     </button>
   )
 }

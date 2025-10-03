@@ -10,7 +10,7 @@ export const ESTIMATION_SCALES: EstimationScale[] = [
     id: "fibonacci",
     name: "Fibonacci",
     description: "1, 2, 3, 5, 8, 13, 21, 34, 55, 89",
-    values: ["1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "?"]
+    values: ["1", "2", "3", "5", "8", "13", "21", "34", "55", "89", "☕", "?"]
   },
   {
     id: "tshirt",
@@ -34,7 +34,7 @@ export const ESTIMATION_SCALES: EstimationScale[] = [
     id: "custom",
     name: "Custom",
     description: "Custom scale",
-    values: ["1", "2", "3", "4", "5", "8", "13", "?"]
+    values: ["1", "2", "3", "4", "5", "8", "13", "☕", "?"]
   }
 ]
 
