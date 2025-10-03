@@ -59,24 +59,6 @@ export function PokerCard({
       aria-disabled={disabled}
     >
       <span className={cn("select-none", textSizeClasses[size])}>{value}</span>
-
-      {/* Corner decorations for poker card aesthetic */}
-      {/* <span
-        className={cn(
-          "absolute top-2 left-2 text-xs font-semibold",
-          selected ? "text-primary-foreground" : "text-muted-foreground",
-        )}
-      >
-        {value}
-      </span>
-      <span
-        className={cn(
-          "absolute bottom-2 right-2 text-xs font-semibold rotate-180",
-          selected ? "text-primary-foreground" : "text-muted-foreground",
-        )}
-      >
-        {value}
-      </span> */}
     </button>
   )
 }

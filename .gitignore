@@ -38,3 +38,6 @@ next-env.d.ts
 
 # build logs and temporary files
 *.log
+
+*storybook.log
+storybook-static
