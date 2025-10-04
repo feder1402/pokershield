@@ -1,34 +1,42 @@
 import { RoomHeader } from "./RoomHeader";
 import { RoomNotFoundCard } from "./RoomNotFoundCard";
 import usePokerRoom from "@/hooks/usePokerRoom";
-import { VotingCards } from "./VotingCards";
+import { EstimationCardSelector } from "./EstimationCardSelector";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Eye, Check } from "lucide-react";
+import { RotateCcw, Eye } from "lucide-react";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 export default function RoomPage() {
+  const setVote = useMutation(api.participants.setVote);
+  const resetVotes = useMutation(api.participants.resetVotes);
+  
   const {
     roomName,
     numberOfParticipants,
     isModerator,
-    sessionId,
+    participantId,
+    vote,
     isVotingEnabled,
   } = usePokerRoom();
 
   const handleVote = (vote: string) => {
+    participantId && setVote({ participantId, vote });
     console.log("Voted: ", vote);
   };
 
   const handleReveal = () => {
-    console.log('Revealed')
-  }
+    console.log("Revealed");
+  };
 
   const handleReset = () => {
-    console.log('Reset')
-  }
+    console.log("Reset");
+    resetVotes({ roomName });
+  };
 
-  if (roomName === undefined || sessionId === undefined) {
-    return <RoomNotFoundCard />;
-  }
+  // if (roomName === undefined || participantId === undefined) {
+  //   return <RoomNotFoundCard />;
+  // }
 
   return (
     <div className="min-h-screen bg-background grid-bg">
@@ -37,40 +45,39 @@ export default function RoomPage() {
         roomName={roomName || ""}
         isVotingEnabled={isVotingEnabled || false}
         isModerator={isModerator}
-        showSettings={false}
-        onScaleChange={() => {}}
-        setShowSettings={() => {}}
       />
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          <VotingCards
-            disabled={isVotingEnabled || false}
+          <EstimationCardSelector
+            enabled={isVotingEnabled || false}
+            votedValue={vote}
             onVote={handleVote}
           />
-          
+
           {isModerator && (
-        <div className="flex justify-center gap-4">
-          <Button onClick={handleReset} variant="outline" className="flex items-center gap-2 bg-transparent">
-            <RotateCcw className="h-4 w-4" />
-            Reset Votes
-          </Button>
-          <Button onClick={handleReveal} disabled={!isVotingEnabled} className="flex items-center gap-2">
-            <Eye className="h-4 w-4" />
-            Reveal Votes
-          </Button>
-        </div>
-      )}
+            <div className="flex justify-center gap-4">
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                className="flex items-center gap-2 bg-transparent"
+              >
+                <RotateCcw className="h-4 w-4" />
+                Reset Votes
+              </Button>
+              <Button
+                onClick={handleReveal}
+                disabled={!isVotingEnabled}
+                className="flex items-center gap-2"
+              >
+                <Eye className="h-4 w-4" />
+                Reveal Votes
+              </Button>
+            </div>
+          )}
 
           {/*<ParticipantsList
             room={room}
-          />
-
-          <ModeratorControls
-            room={room}
-            currentParticipant={currentParticipant}
-            onReset={handleReset}
-            onReveal={handleReveal}
           />
 
           <VotingResults room={room} /> */}

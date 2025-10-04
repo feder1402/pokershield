@@ -7,15 +7,13 @@ export default function usePokerRoom() {
   const params = useParams();
   const roomName = params.roomName;
 
-  const vote = useMutation(api.participants.vote);
-
-  const sessionId = useParticipant(roomName);
-  console.log("usePokerRoom: roomName", roomName, "sessioniId", sessionId);
+  const participant = useParticipant(roomName);
+  console.log("usePokerRoom: roomName", roomName, "participantId", participant?._id);
 
   const room = roomName ? useQuery(api.rooms.getRoom, { roomName }) : null;
-  const isVotingEnabled = room?.isVotingEnabled;
-  const isModerator = room?.moderator === sessionId;
-  const numberOfParticipants = room?.numberOfParticipants;
+  const isModerator = room?.moderator === participant?._id;
 
-  return {roomName, sessionId, isModerator, isVotingEnabled, vote, numberOfParticipants};
+  const isLoading = !room || !participant;
+
+  return {...room, participantId: participant?._id, ...participant, isModerator, isLoading};
 }

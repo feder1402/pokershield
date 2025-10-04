@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
+import { fn } from 'storybook/test';
 import { PokerCard } from "../components/PokerCard";
 
 const meta = {
@@ -14,7 +14,7 @@ export const Unselected: Story = {
     value: "5",
     selected: false,
     disabled: false,
-    onClick: () => {},
+    onClick: fn(),
     className: "",
     size: "md",
   },
@@ -25,7 +25,7 @@ export const Selected: Story = {
     value: "5",
     selected: true,
     disabled: false,
-    onClick: () => {},
+    onClick: fn(),
     className: "",
     size: "md",
   },
@@ -36,7 +36,7 @@ export const Disabled: Story = {
     value: "5",
     selected: true,
     disabled: true,
-    onClick: () => {},
+    onClick: fn(),
     className: "",
     size: "md",
   },

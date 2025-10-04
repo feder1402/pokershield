@@ -3,19 +3,29 @@ import { v } from "convex/values";
 
 export const createRoom = mutation({
   args: { roomName: v.string() },
-  returns: v.id("rooms"),
   handler: async (ctx, args) => {
-    const roomId = await ctx.db.insert("rooms", { name: args.roomName, isVotingEnabled: true, numberOfParticipants: 0 });
+    const roomId = await ctx.db.insert("rooms", {
+      roomName: args.roomName,
+      isVotingEnabled: true,
+      numberOfParticipants: 0,
+      estimationScale: "fibonacci",
+    });
     console.log(`Room "${args.roomName}" created with id ${roomId}`);
     return roomId;
   },
 });
 
 export const getRoom = query({
-  args: { roomName: v.string() },
+  args: { roomName: v.optional(v.string()) },
   handler: async (ctx, args) => {
-    const room = await ctx.db.query("rooms").withIndex("by_name", q => q.eq("name", args.roomName)).first();
-    return room;
+    if (args.roomName != undefined) {
+      const room = await ctx.db
+        .query("rooms")
+        .withIndex("by_room_name", (q) => q.eq("roomName", args.roomName!))
+        .first();
+      return room;
+    }
+    return undefined;
   },
 });
 
@@ -23,7 +33,11 @@ export const enableVoting = query({
   args: { roomName: v.string() },
   returns: v.boolean(),
   handler: async (ctx, args) => {
-    const room = await ctx.db.query("rooms").withIndex("by_name", q => q.eq("name", args.roomName)).first();
+    const room =
+      await ctx.db
+        .query("rooms")
+        .withIndex("by_room_name", (q) => q.eq("roomName", args.roomName))
+        .first();
     if (!room) {
       throw new Error(`Room "${args.roomName}" not found`);
     }

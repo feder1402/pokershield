@@ -1,10 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from 'storybook/test';
 
-import { VotingCards } from "../pages/RoomPage/VotingCards";
+import { EstimationCardSelector } from "../pages/RoomPage/EstimationCardSelector";
+import { EstimationScaleIds } from "@/lib/estimation-scales";
 
 const meta = {
-  component: VotingCards,
-} satisfies Meta<typeof VotingCards>;
+  component: EstimationCardSelector,
+  argTypes: {
+    scale: {
+      options: EstimationScaleIds,
+      control: { type: "select" },
+    },
+  },
+} satisfies Meta<typeof EstimationCardSelector>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -12,15 +20,17 @@ type Story = StoryObj<typeof meta>;
 export const Enabled: Story = {
   args: {
     enabled: true,
-    onVote: () => {},
-    selectedValue: "5",
+    scale: "fibonacci",
+    votedValue: "5",
+    onVote: fn(),
   },
 };
 
 export const Disabled: Story = {
   args: {
     enabled: false,
-    onVote: () => {},
-    selectedValue: "5",
+    scale: "fibonacci",
+    votedValue: "5",
+    onVote: fn(),
   },
 };
