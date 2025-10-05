@@ -16,7 +16,7 @@ import { useQuery } from "convex/react";
 
 interface RoomHeaderProps {
   numberOfParticipants: number;
-  roomName: string;
+  roomName?: string;
   isVotingEnabled: boolean;
   isModerator: boolean;
 }
