@@ -109,15 +109,6 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
   const median = useMemo(() => getMedian(values), [values]);
   const mean = useMemo(() => getMean(values), [values]);
 
-  // Early return if no valid data
-  if (!Number.isFinite(median) || values.length === 0) {
-    return (
-      <div style={{ width, height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ color: colors.ticks, fontSize: 14 }}>No estimates to display</div>
-      </div>
-    );
-  }
-
   const medianIdx = useMemo(() => nearestScaleIndex(median), [median]);
   const bandMinIdx = Math.max(0, medianIdx - 1);
   const bandMaxIdx = Math.min(SCALE.length - 1, medianIdx + 1);
@@ -146,6 +137,17 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
     key: string;
   } | null>(null);
 
+  const hasData = Number.isFinite(median) && values.length > 0;
+  if (!hasData) {
+    return (
+      <div style={{ width, height, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ color: colors.ticks, fontSize: 14 }}>No estimates to display</div>
+      </div>
+    );
+  }
+
+  const isOutlierTick = (idx: number) =>
+    idx < bandMinIdx || idx > bandMaxIdx;
   const isOutlierTick = (idx: number) =>
     idx < bandMinIdx || idx > bandMaxIdx;
 
