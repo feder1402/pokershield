@@ -32,7 +32,7 @@ export default function RoomPage() {
     <div className="min-h-screen bg-background grid-bg">
       <RoomHeader
         numberOfParticipants={numberOfParticipants || 0}
-        roomName={roomName || ""}
+        roomName={roomName}
         isVotingEnabled={isVotingEnabled || false}
         isModerator={isModerator}
       />

@@ -46,13 +46,16 @@ export const isVotingEnabled = query({
 });
 
 export const getVotes = query({
-  args: { roomName: v.string() },
+  args: { roomName: v.optional(v.string()) },
   returns: v.array(v.object({ hasVoted: v.boolean(), vote: v.optional(v.string()), isVotingParticipant: v.boolean()})),
   handler: async (ctx, args) => {
+    if (!args.roomName) {
+      return [];
+    }
     const room =
       await ctx.db
         .query("rooms")
-        .withIndex("by_room_name", (q) => q.eq("roomName", args.roomName))
+        .withIndex("by_room_name", (q) => q.eq("roomName", args.roomName!))
         .first();
     if (!room) {
       throw new Error(`Room "${args.roomName}" not found`);
