@@ -4,22 +4,15 @@ import {
   Copy,
   Check,
   PartyPopper,
-  RotateCcw,
-  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import { Badge } from "@/components/ui/badge";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
+import { api } from "../../../convex/_generated/api";
+import { useQuery } from "convex/react";
 
 interface RoomHeaderProps {
   numberOfParticipants: number;
@@ -35,6 +28,11 @@ export function RoomHeader({
   isModerator,
 }: RoomHeaderProps) {
   const [copied, setCopied] = useState(false);
+  const votes = useQuery(api.rooms.getVotes, { roomName });
+  
+  const validVotes = votes?.filter(({ hasVoted, vote }) => hasVoted && vote) || [];
+  const sum = validVotes?.reduce((accumulator, {vote}) => accumulator + parseInt(vote!), 0);
+  const average = Math.round(sum ? sum / validVotes.length : 0);
 
   const onCopyRoomUrl = async () => {
     const url = window.location.href;
@@ -79,7 +77,7 @@ export function RoomHeader({
               <>
                 <PartyPopper className="h-4 w-4 text-foreground" size={20} />
                 <span className="text-md text-foreground font-bold">
-                  Voting Enabled
+                  Start Voting!
                 </span>
               </>
             ) : (
@@ -89,7 +87,7 @@ export function RoomHeader({
                   size={20}
                 />
                 <span className="text-md text-muted-foreground font-bold">
-                  Voting Disabled
+                  Average: {average}
                 </span>
               </>
             )}
@@ -101,7 +99,7 @@ export function RoomHeader({
             <div className="flex items-center gap-2">
               <span className="text-sm">{numberOfParticipants}</span>
               <Users className="h-4 w-4 text-muted-foreground" />
-              <Badge variant="secondary">Moderator</Badge>
+              {isModerator && <Badge variant="secondary">Moderator</Badge>}
             </div>
             <ThemeToggle />
           </div>

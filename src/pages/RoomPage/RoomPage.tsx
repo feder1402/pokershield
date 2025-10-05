@@ -1,8 +1,6 @@
 import { RoomHeader } from "./RoomHeader";
-import { RoomNotFoundCard } from "./RoomNotFoundCard";
 import usePokerRoom from "@/hooks/usePokerRoom";
 import { EstimationCardSelector } from "./EstimationCardSelector";
-import { Button } from "@/components/ui/button";
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { VotingResults } from "./VotingResults";
@@ -24,15 +22,6 @@ export default function RoomPage() {
   const handleVote = (vote: string) => {
     participantId && setVote({ participantId, vote });
     console.log("Voted: ", vote);
-  };
-
-  const handleReveal = () => {
-    console.log("Revealed");
-  };
-
-  const handleReset = () => {
-    console.log("Reset");
-    roomName && resetVotes({ roomName });
   };
 
   // if (roomName === undefined || participantId === undefined) {
@@ -57,7 +46,7 @@ export default function RoomPage() {
             onVote={handleVote}
           />
 
-          {roomName && <VotingResults room={roomName} />}
+          {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled!} />}
 
           <div className="mt-8">
             {isModerator && roomName &&<ModeratorControls room={roomName} isVotingEnabled={isVotingEnabled!} />}

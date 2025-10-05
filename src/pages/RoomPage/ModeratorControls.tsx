@@ -1,4 +1,4 @@
-import { RotateCcw, Eye, Check } from "lucide-react"
+import { RotateCcw, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -11,7 +11,6 @@ interface ModeratorControlsProps {
 export function ModeratorControls({ room, isVotingEnabled }: ModeratorControlsProps) {
   const resetVotes = useMutation(api.participants.resetVotes);
   const disableVoting = useMutation(api.rooms.disableVoting);
-//  const enableVoting = useMutation(api.rooms.enableVoting);
 
   const handleReveal = async () => {
     console.log("Revealing votes for room", room)
@@ -28,19 +27,19 @@ export function ModeratorControls({ room, isVotingEnabled }: ModeratorControlsPr
     <Button
       onClick={handleReset}
       variant="outline"
-      className="flex items-center gap-2 bg-transparent"
     >
-      <RotateCcw className="h-4 w-4" />
-      Reset Votes
+      <RotateCcw />
+      Restart
     </Button>
+    {isVotingEnabled && (
     <Button
       onClick={handleReveal}
       disabled={!isVotingEnabled}
-      className="flex items-center gap-2"
     >
-      <Eye className="h-4 w-4" />
-      Reveal Votes
-    </Button>
+      <Eye/>
+        Reveal Votes
+      </Button>
+    )}
   </div>
   )
 }

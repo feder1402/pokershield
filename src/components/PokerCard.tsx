@@ -52,7 +52,7 @@ export function PokerCard({
         // Selected state
         selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
         // Disabled state
-        disabled && "opacity-50 cursor-arrow bg-card",
+        disabled && "opacity-50 cursor-arrow",
         // Focus state
         !disabled &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer",
