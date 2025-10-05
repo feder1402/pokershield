@@ -58,7 +58,7 @@ export const getVotes = query({
         .withIndex("by_room_name", (q) => q.eq("roomName", args.roomName!))
         .first();
     if (!room) {
-      throw new Error(`Room "${args.roomName}" not found`);
+      throw new Error(`Room "${args.roomName!}" not found`);
     }
 
     const participants = await ctx.db
