@@ -1,11 +1,13 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { ReactNode } from "react"
 
 export interface PokerCardProps {
-  value: string | number
+  value: ReactNode
   selected?: boolean
   disabled?: boolean
+  faceUp?: boolean
   onClick?: () => void
   className?: string
   size?: "sm" | "md" | "lg"
@@ -15,6 +17,7 @@ export function PokerCard({
   value,
   selected = false,
   disabled = false,
+  faceUp =true,
   onClick,
   className,
   size = "md",
@@ -45,14 +48,15 @@ export function PokerCard({
         "border-2 border-border",
         "shadow-md",
         // Hover state
-        !disabled && !selected && "hover:border-primary hover:shadow-lg hover:-translate-y-1 hover:bg-secondary/90",
+        !disabled && !selected && "hover:border-primary hover:shadow-lg hover:-translate-y-2 hover:bg-secondary/90",
         // Selected state
         selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
         // Disabled state
-        disabled && "opacity-50 cursor-arrow bg-card text-card-foreground",
+        disabled && "opacity-50 cursor-arrow bg-card",
         // Focus state
         !disabled &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer",
+        !faceUp && "border-dotted border-primary opacity-20",
         className,
       )}
       aria-pressed={selected}

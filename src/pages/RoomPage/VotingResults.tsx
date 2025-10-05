@@ -1,46 +1,31 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Room } from "@/lib/room-store"
+import { api } from "../../../convex/_generated/api";
+import { useQuery } from "convex/react";
+import { PokerCard } from "@/components/PokerCard";
+import { Check, X } from "lucide-react";
 
 interface VotingResultsProps {
-  room: Room
+  room: string;
 }
 
 export function VotingResults({ room }: VotingResultsProps) {
-  const getVoteCounts = () => {
-    return room.participants
-      .filter((p) => p.hasVoted && p.vote)
-      .reduce(
-        (acc, p) => {
-          const vote = p.vote!
-          acc[vote] = (acc[vote] || 0) + 1
-          return acc
-        },
-        {} as Record<string, number>,
-      )
+  const votes = useQuery(api.rooms.getVotes, { roomName: room });
+  console.log("votes", votes);
+
+  if (!votes) {
+    return null;
   }
 
-  if (!room.votesRevealed) {
-    return null
-  }
+  const numberOfVotes = votes.filter(({ hasVoted }) => hasVoted).length;
 
   return (
     <div className="mt-8 text-center">
-      <Card className="max-w-md mx-auto">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Voting Results</h3>
-          <div className="space-y-2">
-            {Object.entries(getVoteCounts()).map(([vote, count]) => (
-              <div key={vote} className="flex justify-between items-center">
-                <span className="font-medium">{vote}</span>
-                <Badge variant="secondary">
-                  {count} vote{count !== 1 ? "s" : ""}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <h3 className="text-lg font-semibold mb-4">Voting Results</h3>
+      <p className="text-sm text-muted-foreground mb-4">{numberOfVotes} of {votes.length} people voted</p>
+      <div className="space-y-2 flex flex-wrap justify-center  gap-4 mx-auto">
+        {votes?.map(({ hasVoted }, idx) => (
+          <PokerCard key={idx} value={hasVoted ? <Check /> : <X />} size="sm" disabled={true} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }

@@ -186,23 +186,3 @@ body {
   @apply bg-background text-foreground;
   letter-spacing: var(--tracking-normal);
 }
-
-/* Custom grid pattern background */
-.grid-bg {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-/* Poker card styles */
-.poker-card {
-  @apply bg-card border border-border rounded-lg p-4 text-center cursor-pointer transition-all duration-200 hover:bg-accent hover:scale-105 active:scale-95;
-}
-
-.poker-card.selected {
-  @apply bg-primary text-primary-foreground border-primary;
-}
-
-.poker-card.revealed {
-  @apply bg-secondary border-secondary;
-}

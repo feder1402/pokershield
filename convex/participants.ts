@@ -68,15 +68,19 @@ export const setVote = mutation({
 export const resetVotes = mutation({
   args: { roomName: v.string() },
   handler: async (ctx, args) => {
+    // Find room
     const room = await ctx.db.query("rooms").withIndex("by_room_name", (q) => q.eq("roomName", args.roomName)).first();
     if (!room) {
       throw new Error("Room not found");
     }
+    // Reset votes for all participants in the room
     await ctx.db.query("participants").withIndex("by_room_id", (q) => q.eq("roomId", room._id)).collect().then((participants) => {
       participants.forEach((participant) => {
         ctx.db.patch(participant._id, { vote: undefined });
       });
     });
+    // Enable voting in the room
+    await ctx.db.patch(room._id, { isVotingEnabled: true });
     console.log(`Votes reset for room ${args.roomName}`);
   },
 });

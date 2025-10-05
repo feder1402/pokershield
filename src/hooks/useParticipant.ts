@@ -16,7 +16,7 @@ export default function useParticipant(roomName: string | undefined) {
     if (roomName && !participantId) { // If there is no sessionId, create a new participant
       console.log("createParticipant", roomName);
       createParticipant({ roomName }).then((participant) => {
-        participant &&setParticipantId(participant.participantId);
+        participant && setParticipantId(participant.participantId);
       });
 
     }

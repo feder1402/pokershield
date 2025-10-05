@@ -4,13 +4,22 @@ import {
   Copy,
   Check,
   PartyPopper,
+  RotateCcw,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Badge } from "@/components/ui/badge";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
 
 interface RoomHeaderProps {
   numberOfParticipants: number;
@@ -25,7 +34,6 @@ export function RoomHeader({
   isVotingEnabled,
   isModerator,
 }: RoomHeaderProps) {
-
   const [copied, setCopied] = useState(false);
 
   const onCopyRoomUrl = async () => {
@@ -36,7 +44,7 @@ export function RoomHeader({
   };
   return (
     <header className="border-b border-border">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container  mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-4 w-full">
             <Link
@@ -88,15 +96,12 @@ export function RoomHeader({
           </div>
 
           <div className="flex items-center gap-4 w-full justify-end">
-            {isModerator && <Badge variant="secondary">Moderator</Badge>}
+
 
             <div className="flex items-center gap-2">
+              <span className="text-sm">{numberOfParticipants}</span>
               <Users className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">
-                {numberOfParticipants > 1
-                  ? ` ${numberOfParticipants} participants`
-                  : "only you"}
-              </span>
+              <Badge variant="secondary">Moderator</Badge>
             </div>
             <ThemeToggle />
           </div>
