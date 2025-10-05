@@ -28,7 +28,7 @@ export function RoomHeader({
   isModerator,
 }: RoomHeaderProps) {
   const [copied, setCopied] = useState(false);
-  const votes = useQuery(api.rooms.getVotes, { roomName });
+  const votes = useQuery(api.rooms.getVotes, roomName != null ? { roomName } : "skip");
   
   const validVotes = votes?.filter(({ hasVoted, vote }) => hasVoted && vote) || [];
   const sum = validVotes?.reduce((accumulator, {vote}) => accumulator + parseInt(vote!), 0);
@@ -87,7 +87,7 @@ export function RoomHeader({
                   size={20}
                 />
                 <span className="text-md text-muted-foreground font-bold">
-                  Average: {average}
+                  Voting Results
                 </span>
               </>
             )}

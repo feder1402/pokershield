@@ -10,7 +10,7 @@ export default function usePokerRoom() {
   const participant = useParticipant(roomName);
   console.log("usePokerRoom: roomName", roomName, "participantId", participant?._id);
 
-  const room = roomName ? useQuery(api.rooms.getRoom, { roomName }) : null;
+  const room = useQuery(api.rooms.getRoom, roomName != null ? { roomName } : "skip");
   const isModerator = room?.moderator === participant?._id;
 
   const isLoading = !room || !participant;

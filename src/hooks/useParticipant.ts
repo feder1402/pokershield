@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { Doc, Id } from "convex/_generated/dataModel";
+import { Id } from "convex/_generated/dataModel";
 import { useSessionStorage } from "@uidotdev/usehooks";
 
 export default function useParticipant(roomName: string | undefined) {
@@ -9,7 +9,7 @@ export default function useParticipant(roomName: string | undefined) {
   const createParticipant = useMutation(api.participants.createParticipant);
 
   const [participantId, setParticipantId] = useSessionStorage<Id<"participants"> | undefined>(`${roomName}-participantId`,undefined)
-  const participant = useQuery(api.participants.getParticipant, { participantId });
+  const participant = useQuery(api.participants.getParticipant, participantId != null ? { participantId } : "skip");
   
   console.log("useParticipant: roomName", roomName, "participantId", participantId);
   useEffect(() => {

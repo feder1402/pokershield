@@ -2,6 +2,7 @@ import { api } from "../../../convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
 import { PokerCard } from "@/components/PokerCard";
 import { Check, X } from "lucide-react";
+import { ConvergenceMap } from "@/components/ConvergenceMap";
 
 interface VotingResultsProps {
   room: string;
@@ -20,24 +21,38 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
   const voters = votes.filter(({ isVotingParticipant }) => isVotingParticipant);
   const numberOfVotes = voters.filter(({ hasVoted }) => hasVoted).length;
 
-  if (numberOfVotes === voters.length) {
+  if (numberOfVotes === voters.length && isVotingEnabled) {
     disableVoting({ roomName: room });
   }
-  
+
   return (
     <div className="mt-8 text-center">
       <p className="text-sm text-muted-foreground mb-4">
-        {numberOfVotes} of {voters.length} people voted
+        {numberOfVotes > 0
+          ? `${numberOfVotes} of ${voters.length} people voted`
+          : "Nobody voted yet"}
       </p>
       <div className="space-y-2 flex flex-wrap justify-center  gap-4 mx-auto">
         {voters?.map(({ hasVoted, vote }, idx) =>
           isVotingEnabled ? (
-            <PokerCard key={idx} value={hasVoted ? <Check /> : <X />} size="md" disabled={true} />
+            <PokerCard
+              key={idx}
+              value={hasVoted ? <Check /> : ""}
+              size="md"
+              disabled={true}
+            />
           ) : (
             <PokerCard key={idx} value={vote} size="md" disabled={true} />
           )
         )}
       </div>
+      {!isVotingEnabled && (
+        <div className="mt-10 container mx-auto flex justify-center">
+          <ConvergenceMap
+            values={votes.filter(({ hasVoted }) => hasVoted).map(({ vote }) => (vote ? parseInt(vote) : 0))}
+          />
+        </div>
+      )}
     </div>
   );
 }
