@@ -1,9 +1,8 @@
 import { api } from "../../../convex/_generated/api";
-import { useMutation, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import { PokerCard } from "@/components/PokerCard";
 import { Check } from "lucide-react";
 import { ConvergenceMap } from "@/components/ConvergenceMap";
-import { useEffect } from "react";
 
 interface VotingResultsProps {
   room: string;
@@ -12,7 +11,6 @@ interface VotingResultsProps {
 
 export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
   const votes = useQuery(api.rooms.getVotes, { roomName: room });
-  const disableVoting = useMutation(api.rooms.disableVoting);
   console.log("votes", votes);
 
   if (!votes) {

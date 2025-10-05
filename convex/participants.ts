@@ -61,7 +61,7 @@ export const setVote = mutation({
     }
 
     // Update participant's vote
-    ctx.db.patch(args.participantId, { vote: args.vote });
+    await ctx.db.patch(args.participantId, { vote: args.vote });
     console.log(`Participant ${args.participantId} vote changed to ${args.vote}`);
 
     // Disable voting in the room if all participants have voted
