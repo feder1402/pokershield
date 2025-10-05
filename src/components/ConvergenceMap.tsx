@@ -148,8 +148,6 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
 
   const isOutlierTick = (idx: number) =>
     idx < bandMinIdx || idx > bandMaxIdx;
-  const isOutlierTick = (idx: number) =>
-    idx < bandMinIdx || idx > bandMaxIdx;
 
   return (
     <div style={{ position: "relative", width, height }}>
