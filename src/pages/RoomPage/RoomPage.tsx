@@ -9,8 +9,6 @@ import { ModeratorControls } from "./ModeratorControls";
 export default function RoomPage() {
   const setVote = useMutation(api.participants.setVote);
 
-  console.log('Room page rendered');
-
   const {
     roomName,
     numberOfParticipants,

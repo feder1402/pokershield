@@ -1,8 +1,9 @@
 import { api } from "../../../convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
 import { PokerCard } from "@/components/PokerCard";
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 import { ConvergenceMap } from "@/components/ConvergenceMap";
+import { useEffect } from "react";
 
 interface VotingResultsProps {
   room: string;
@@ -20,10 +21,6 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
 
   const voters = votes.filter(({ isVotingParticipant }) => isVotingParticipant);
   const numberOfVotes = voters.filter(({ hasVoted }) => hasVoted).length;
-
-  if (numberOfVotes === voters.length && isVotingEnabled) {
-    disableVoting({ roomName: room });
-  }
 
   return (
     <div className="mt-8 text-center">
@@ -49,7 +46,7 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
       {!isVotingEnabled && (
         <div className="mt-10 container mx-auto flex justify-center">
           <ConvergenceMap
-            values={votes.filter(({ hasVoted }) => hasVoted).map(({ vote }) => (vote ? parseInt(vote) : 0))}
+            values={votes.filter(({ hasVoted }) => hasVoted).map(({ vote }) => (vote ? parseInt(vote) : 0)).filter((value) => !isNaN(value))}
           />
         </div>
       )}

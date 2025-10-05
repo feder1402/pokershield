@@ -48,7 +48,7 @@ function nearestScaleIndex(value: number): number {
   let bestDiff = Infinity;
   for (let i = 0; i < SCALE.length; i++) {
     const d = Math.abs(SCALE[i] - value);
-    if (d < bestDiff) {
+    if (d <= bestDiff) {
       bestDiff = d;
       bestIdx = i;
     }
@@ -100,19 +100,25 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
   const counts = useMemo(() => {
     const c = new Array(SCALE.length).fill(0);
     for (const v of values) {
-      if (v === 0) continue;
       const i = nearestScaleIndex(v);
       c[i] += 1;
     }
     return c as number[];
   }, [values]);
-
   // Stats
   const median = useMemo(() => getMedian(values), [values]);
   const mean = useMemo(() => getMean(values), [values]);
-  const medianIdx = useMemo(() => nearestScaleIndex(median), [median]);
 
-  // Consensus band: median ± 1 step
+  // Early return if no valid data
+  if (!Number.isFinite(median) || values.length === 0) {
+    return (
+      <div style={{ width, height, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: colors.ticks, fontSize: 14 }}>No estimates to display</div>
+      </div>
+    );
+  }
+
+  const medianIdx = useMemo(() => nearestScaleIndex(median), [median]);
   const bandMinIdx = Math.max(0, medianIdx - 1);
   const bandMaxIdx = Math.min(SCALE.length - 1, medianIdx + 1);
 
@@ -145,7 +151,6 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
 
   return (
     <div style={{ position: "relative", width, height }}>
-      {/* Tooltip */}
       {hover && (
         <div
           role="tooltip"

@@ -60,8 +60,15 @@ export const setVote = mutation({
       throw new Error("Voting is not enabled");
     }
 
+    // Update participant's vote
     ctx.db.patch(args.participantId, { vote: args.vote });
     console.log(`Participant ${args.participantId} vote changed to ${args.vote}`);
+
+    // Disable voting in the room if all participants have voted
+    const participants = await ctx.db.query("participants").withIndex("by_room_id", (q) => q.eq("roomId", participant.roomId)).collect();
+    if (participants.filter((participant) => participant.isVotingParticipant).every((participant) => participant.vote !== undefined)) {
+      await ctx.db.patch(room._id, { isVotingEnabled: false });
+    }
   },
 });
 
