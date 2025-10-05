@@ -8,7 +8,6 @@ import { ModeratorControls } from "./ModeratorControls";
 
 export default function RoomPage() {
   const setVote = useMutation(api.participants.setVote);
-  const resetVotes = useMutation(api.participants.resetVotes);
 
   const {
     roomName,
