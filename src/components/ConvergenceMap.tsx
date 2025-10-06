@@ -244,7 +244,7 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
           />
           <text
             x={idxToX(medianIdx)}
-            y={margin.top - 8}
+            y={margin.top - 16}
             textAnchor="middle"
             fontSize={12}
             fill={colors.median}
@@ -268,7 +268,7 @@ export const ConvergenceMap: React.FC<ConvergenceMapProps> = ({
             />
             <text
               x={meanX}
-              y={margin.top - 8}
+              y={margin.top - 5}
               textAnchor="middle"
               fontSize={12}
               fill={colors.mean}
