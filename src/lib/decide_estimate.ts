@@ -82,7 +82,7 @@ export function decideEstimate(votes: Fib[]): Decision {
 
   // Risk-aware median
   if (spread <= 2) {
-    return {kind:'final', points: med, reason:`Low spread; usemedian ${med}.`};
+    return {kind:'final', points: med, reason:`Low spread; use median ${med}.`};
   }
   if (spread <= 3) {
     const up = nextFibAbove(med);
