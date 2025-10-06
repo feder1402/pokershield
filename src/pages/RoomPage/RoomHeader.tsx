@@ -11,8 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { api } from "../../../convex/_generated/api";
-import { useQuery } from "convex/react";
 
 interface RoomHeaderProps {
   numberOfParticipants: number;
@@ -28,11 +26,6 @@ export function RoomHeader({
   isModerator,
 }: RoomHeaderProps) {
   const [copied, setCopied] = useState(false);
-  const votes = useQuery(api.rooms.getVotes, roomName != null ? { roomName } : "skip");
-  
-  const validVotes = votes?.filter(({ hasVoted, vote }) => hasVoted && vote) || [];
-  const sum = validVotes?.reduce((accumulator, {vote}) => accumulator + parseInt(vote!), 0);
-  const average = Math.round(sum ? sum / validVotes.length : 0);
 
   const onCopyRoomUrl = async () => {
     const url = window.location.href;
