@@ -28,18 +28,15 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
         .map(({ vote }) => (vote ? parseInt(vote) : 0))
         .filter((value) => !isNaN(value)) || [];
   const stdDev = standardDeviation(validVotes || []);
-  console.log("stdDev", stdDev);
+
 
   useEffect(() => {
-    console.log("useEffect", isVotingEnabled, stdDev);
+
     if (!isVotingEnabled && stdDev < 1) {
-      console.log("rewarding");
+
       reward();
     }
   }, [stdDev, isVotingEnabled]);
-
-  console.log("votes", votes);
-
   if (!votes) {
     return null;
   }
