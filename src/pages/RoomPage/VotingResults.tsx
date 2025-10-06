@@ -3,6 +3,10 @@ import { useQuery } from "convex/react";
 import { PokerCard } from "@/components/PokerCard";
 import { Check } from "lucide-react";
 import { ConvergenceMap } from "@/components/ConvergenceMap";
+import { standardDeviation } from "@/lib/standard_deviation";
+import useRandomReward from "@/hooks/useRandomReward";
+import { useEffect } from "react";
+import { DecisionEstimate } from "./DecisionEstimate";
 
 interface VotingResultsProps {
   room: string;
@@ -11,21 +15,38 @@ interface VotingResultsProps {
 
 export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
   const votes = useQuery(api.rooms.getVotes, { roomName: room });
-  console.log("votes", votes);
+  const { reward } = useRandomReward();
 
+  const voters = votes?.filter(
+    ({ isVotingParticipant }) => isVotingParticipant
+  ) || [];
+  const numberOfVotes = voters?.filter(({ hasVoted }) => hasVoted).length || 0;
+  const validVotes = isVotingEnabled
+    ? []
+    : votes
+        ?.filter(({ hasVoted }) => hasVoted)
+        .map(({ vote }) => (vote ? parseInt(vote) : 0))
+        .filter((value) => !isNaN(value)) || [];
+  const stdDev = standardDeviation(validVotes || []);
+
+
+  useEffect(() => {
+
+    if (!isVotingEnabled && stdDev < 1) {
+
+      reward();
+    }
+  }, [stdDev, isVotingEnabled]);
   if (!votes) {
     return null;
   }
 
-  const voters = votes.filter(({ isVotingParticipant }) => isVotingParticipant);
-  const numberOfVotes = voters.filter(({ hasVoted }) => hasVoted).length;
-
   return (
     <div className="mt-8 text-center">
       <p className="text-sm text-muted-foreground mb-4">
-        {numberOfVotes > 0
-          ? `${numberOfVotes} of ${voters.length} people voted`
-          : "Nobody voted yet"}
+        {numberOfVotes === 0 ? "Nobody Voted yet" 
+        : numberOfVotes < voters.length ? `${numberOfVotes} of ${voters?.length} people voted`
+        : numberOfVotes === voters.length && "Everybody Voted"}
       </p>
       <div className="space-y-2 flex flex-wrap justify-center  gap-4 mx-auto">
         {voters?.map(({ hasVoted, vote }, idx) =>
@@ -42,10 +63,13 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
         )}
       </div>
       {!isVotingEnabled && (
-        <div className="mt-10 container mx-auto flex justify-center">
-          <ConvergenceMap
-            values={votes.filter(({ hasVoted }) => hasVoted).map(({ vote }) => (vote ? parseInt(vote) : 0)).filter((value) => !isNaN(value))}
-          />
+        <div id="confettiReward">
+          <div className="mt-10 container mx-auto flex justify-center">
+            <ConvergenceMap values={validVotes} />
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <DecisionEstimate votes={validVotes} />
+          </div>
         </div>
       )}
     </div>

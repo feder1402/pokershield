@@ -60,6 +60,7 @@
     "react-dom": "^19",
     "react-hook-form": "^7.60.0",
     "react-resizable-panels": "^2.1.7",
+    "react-rewards": "^2.1.0",
     "react-router-dom": "^6.28.0",
     "recharts": "2.15.4",
     "sonner": "^1.7.4",
