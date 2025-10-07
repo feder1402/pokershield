@@ -1,4 +1,4 @@
-export interface EstimationScale {
+interface EstimationScale {
   id: EstimationScaleId
   name: string
   description: string
@@ -7,7 +7,7 @@ export interface EstimationScale {
 export const EstimationScaleIds = ["fibonacci", "tshirt", "powers-of-two", "linear", "custom"] as const
 export type EstimationScaleId = (typeof EstimationScaleIds)[number]
 
-export const ESTIMATION_SCALES: EstimationScale[] = [
+const ESTIMATION_SCALES: EstimationScale[] = [
   {
     id: "fibonacci",
     name: "Fibonacci",
@@ -40,7 +40,7 @@ export const ESTIMATION_SCALES: EstimationScale[] = [
   }
 ]
 
-export function getScaleById(scaleId: EstimationScaleId): EstimationScale | undefined {
+function getScaleById(scaleId: EstimationScaleId): EstimationScale | undefined {
   return ESTIMATION_SCALES.find(scale => scale.id === scaleId)
 }
 
