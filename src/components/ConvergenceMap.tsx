@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 
 /** ---------- Types ---------- */
-export type ConvergenceMapProps = {
+type ConvergenceMapProps = {
   /** Raw estimates (e.g., [5,8,5,3,13]) */
   values: number[];
   width?: number;

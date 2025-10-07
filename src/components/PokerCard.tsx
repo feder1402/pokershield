@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 
-export interface PokerCardProps {
+interface PokerCardProps {
   value: ReactNode
   selected?: boolean
   disabled?: boolean

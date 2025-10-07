@@ -40,7 +40,7 @@ function clusterVotes(votes: Fib[]): {clusters: number[][], isBimodal: boolean} 
   return {clusters: [left, right], isBimodal};
 }
 
-export type Decision =
+type Decision =
   | {kind: 'final'; points: Fib; reason: string}
   | {kind: 'revote'; reason: string}
   | {kind: 'split-or-spike'; reason: string};
