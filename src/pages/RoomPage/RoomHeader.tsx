@@ -64,8 +64,9 @@ export function RoomHeader({
                 )}
               </Button>
               {isModerator && numberOfParticipants === 1 && (
-              <span className="text-md font-bold flex items-center justify-center gap-2 text-blue-500">
-                  <ArrowLeft className="h-4 w-4 text-foreground" /> Invite participants to start voting
+                <span className="text-md font-bold flex items-center justify-center gap-2 text-blue-500 animate-wiggle">
+                  <ArrowLeft className="h-4 w-4 text-foreground" /> Invite
+                  participants to start voting
                 </span>
               )}
             </div>
@@ -73,27 +74,25 @@ export function RoomHeader({
 
           {numberOfParticipants > 1 && (
             <div className="flex items-center justify-center w-full gap-2">
-            {isVotingEnabled ? (              
+              {isVotingEnabled ? (
                 <span className="text-md text-foreground font-bold">
                   Start Voting!
                 </span>
-            ) : (
-              <>
-                <PartyPopper
-                  className="h-4 w-4 text-muted-foreground"
-                  size={20}
-                />
-                <span className="text-md text-muted-foreground font-bold">
-                  Voting Results
-                </span>
+              ) : (
+                <>
+                  <PartyPopper
+                    className="h-4 w-4 text-muted-foreground"
+                    size={20}
+                  />
+                  <span className="text-md text-muted-foreground font-bold">
+                    Voting Results
+                  </span>
                 </>
               )}
             </div>
           )}
 
           <div className="flex items-center gap-4 w-full justify-end">
-
-
             <div className="flex items-center gap-2">
               <span className="text-sm">{numberOfParticipants}</span>
               <Users className="h-4 w-4 text-muted-foreground" />
