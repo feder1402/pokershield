@@ -77,12 +77,12 @@ export function decideEstimate(votes: Fib[]): Decision {
     }
     // small gap → median
     return {kind:'final', points: med,
-      reason:`There are two clusters close together; use median: ${med}.`};
+      reason:`There are two clusters close together; use median.`};
   }
 
   // Risk-aware median
   if (spread <= 2) {
-    return {kind:'final', points: med, reason:`Low spread; usemedian ${med}.`};
+    return {kind:'final', points: med, reason:`Low spread; use median.`};
   }
   if (spread <= 3) {
     const up = nextFibAbove(med);
