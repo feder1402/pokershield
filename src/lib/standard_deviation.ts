@@ -1,7 +1,8 @@
 /**
- * Calculate the standard deviation of an array of numbers
- * @param array - The array of numbers to calculate the standard deviation of
- * @returns The standard deviation of the array
+ * Compute the population standard deviation of the given numbers.
+ *
+ * @param array - The numbers to analyze.
+ * @returns The population standard deviation of `array`; returns 0 if `array` is empty.
  */
 export function standardDeviation(array: number[]) {
   if (array.length === 0) {

@@ -13,6 +13,15 @@ interface VotingResultsProps {
   isVotingEnabled: boolean;
 }
 
+/**
+ * Render voting results and post-vote analyses for a room.
+ *
+ * Displays the voting status line, a list of voter cards (showing checkmarks while voting is enabled or vote values once voting is closed), and when voting is closed shows a ConvergenceMap and DecisionEstimate for the collected votes. When voting is closed and the votes' standard deviation is less than 1, invokes the reward callback.
+ *
+ * @param room - The room name used to query votes.
+ * @param isVotingEnabled - If true, shows voting-in-progress visuals; if false, reveals results and analyses.
+ * @returns The rendered React element, or `null` when vote data is not available.
+ */
 export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
   const votes = useQuery(api.rooms.getVotes, { roomName: room });
   const { reward } = useRandomReward();
