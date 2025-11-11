@@ -3,13 +3,13 @@ import { v } from "convex/values";
 
 export default defineSchema({
   rooms: defineTable({
-    roomName: v.string(),
-    isVotingEnabled: v.boolean(),
-    numberOfParticipants: v.number(),
-    moderator: v.optional(v.id("participants")),
     estimationScale: v.optional(v.string()),
-  })
-  .index("by_room_name", ["roomName"]),
+    isVotingEnabled: v.boolean(),
+    moderator: v.optional(v.id("participants")),
+    numberOfParticipants: v.float64(),
+    roomName: v.string(),
+    storyTitle: v.optional(v.string()),
+  }).index("by_room_name", ["roomName"]),
   participants: defineTable({
     roomId: v.id("rooms"),
     vote: v.optional(v.string()),
