@@ -1,0 +1,35 @@
+---
+trigger: always_on
+description:
+globs:
+---
+
+# PokerShield Project Structure
+
+This is a React + TypeScript + Vite project for collaborative planning poker estimation.
+
+## Key Files and Structure
+
+- **Entry Point**: [src/main.tsx](mdc:src/main.tsx) - React app initialization
+- **App Component**: [src/App.tsx](mdc:src/App.tsx) - Main app with routing
+- **Pages**: 
+  - [src/pages/HomePage.tsx](mdc:src/pages/HomePage.tsx) - Landing page
+  - [src/pages/RoomPage.tsx](mdc:src/pages/RoomPage.tsx) - Planning poker room interface
+- **State Management**: [src/lib/room-store.ts](mdc:src/lib/room-store.ts) - Zustand store for room state
+- **UI Components**: [src/components/ui/](mdc:src/components/ui/) - shadcn/ui components
+- **Utilities**: [src/lib/utils.ts](mdc:src/lib/utils.ts) - Common utilities (cn function)
+- **Configuration**:
+  - [vite.config.ts](mdc:vite.config.ts) - Vite configuration with path aliases
+  - [tailwind.config.ts](mdc:tailwind.config.ts) - Tailwind CSS configuration
+  - [tsconfig.json](mdc:tsconfig.json) - TypeScript configuration
+
+## Tech Stack
+- React 19 with TypeScript
+- Vite for build tooling
+- React Router for navigation
+- Zustand for state management
+- Tailwind CSS + shadcn/ui for styling
+- Lucide React for icons
+
+## Path Aliases
+- `@/*` maps to `./src/*` (configured in vite.config.ts and tsconfig.json)

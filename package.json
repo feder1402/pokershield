@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "type": "module",
+  "license": "MIT",
   "scripts": {
     "dev": "npm-run-all --parallel dev:backend dev:frontend",
     "build": "vite build",

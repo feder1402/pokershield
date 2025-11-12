@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PokerShield
 
-## Getting Started
+Planning Poker for agile teams, built with React, TypeScript, and Vite. Real‑time collaboration is powered by Convex.
 
-First, run the development server:
+## Features
+
+- Collaborative planning poker rooms
+- Real‑time sync with Convex
+- React 19 + TypeScript
+- Tailwind CSS + shadcn/ui components
+- Zustand for state management
+- React Router for navigation
+
+## Quick Start
+
+Prerequisites:
+
+- Node.js 18+ (20 LTS recommended)
+- npm (included with Node.js)
+
+Install dependencies and start the dev servers (frontend + Convex backend):
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Vite will serve the app at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- http://localhost:3000/
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+On first run, the Convex CLI will prompt you to link or create a project and will write environment values to `.env.local`.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` — Run Convex dev server and Vite in parallel
+- `npm run build` — Build the frontend (Vite)
+- `npm run dev:backend` — Run Convex dev server
+- `npm run dev:frontend` — Run Vite dev server
+- `npm run logs` — Tail Convex logs
+- `npm run lint` — Lint Convex functions and typecheck their TS config
+- `npm run storybook` — Start Storybook on port 6006
+- `npm run build-storybook` — Build Storybook
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Preview a production build locally:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npx vite preview
+```
 
-## Deploy on Vercel
+## Environment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Convex config is created automatically on first `npm run dev` and saved to `.env.local`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `CONVEX_DEPLOYMENT` — Convex deployment name
+- `VITE_CONVEX_URL` — Convex HTTP URL used by the client
+
+If you need to reconfigure, run:
+
+```bash
+npx convex dev --until-success
+```
+
+## Project Structure
+
+- `src/main.tsx` — App bootstrap
+- `src/App.tsx` — App shell and routes
+- `src/pages/` — Pages (`HomePage`, `RoomPage`)
+- `src/lib/room-store.ts` — Zustand store
+- `src/components/ui/` — shadcn/ui components
+- `convex/` — Convex schema, queries, and mutations
+- `tailwind.config.ts` — Tailwind configuration
+- `vite.config.ts` — Vite config with path aliases
+- `tsconfig.json` — TypeScript configuration
+
+Path alias:
+
+- `@/*` → `./src/*`
+
+## Tech Stack
+
+- React 19 + TypeScript
+- Vite 7
+- Convex (realtime backend)
+- Zustand
+- Tailwind CSS + shadcn/ui
+- React Router
+- Lucide React icons
+
+## Development Notes
+
+- First `npm run dev` may prompt Convex project selection and generate `.env.local`.
+- When updating Convex schema, the dev server will typecheck and show errors in the terminal.
+- Storybook is configured via `storybook` with Vite.
+
+## Testing
+
+This project includes Vitest in devDependencies. You can run tests via Vitest CLI:
+
+```bash
+npx vitest
+```
+
+## Building & Deployment
+
+1) Frontend
+
+- Build with `npm run build` (outputs to `dist/`).
+- Deploy `dist/` to any static host (Vercel, Netlify, GitHub Pages, etc.).
+
+2) Convex Backend
+
+- Deploy Convex separately using the Convex CLI and dashboard.
+- The frontend must point `VITE_CONVEX_URL` to the deployed Convex instance.
+
+## Contributing
+
+Contributions are welcome! Please:
+
+- Open an issue to discuss significant changes.
+- Use clear commit messages and small PRs when possible.
+- Follow existing code style and conventions.
+
+## Security
+
+If you discover a security issue, please open a private issue or contact the maintainers. Avoid including sensitive details in public issues.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+## Copyright
+
+ © 2025 Federico Raggi
