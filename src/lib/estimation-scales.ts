@@ -40,7 +40,7 @@ const ESTIMATION_SCALES: EstimationScale[] = [
   }
 ]
 
-function getScaleById(scaleId: EstimationScaleId): EstimationScale | undefined {
+export function getScaleById(scaleId: EstimationScaleId): EstimationScale | undefined {
   return ESTIMATION_SCALES.find(scale => scale.id === scaleId)
 }
 

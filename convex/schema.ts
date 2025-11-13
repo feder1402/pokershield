@@ -8,6 +8,7 @@ export default defineSchema({
     numberOfParticipants: v.number(),
     moderator: v.optional(v.id("participants")),
     estimationScale: v.optional(v.string()),
+    storyTitle: v.optional(v.string()),
   })
   .index("by_room_name", ["roomName"]),
   participants: defineTable({
