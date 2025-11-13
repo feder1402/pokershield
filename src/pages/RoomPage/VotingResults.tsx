@@ -51,7 +51,7 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
   }
 
   return (
-    <div className="mt-8 text-center">
+    <div className="text-center">
       <p className="text-sm text-muted-foreground mb-4">
         {numberOfVotes === 0 ? "Nobody Voted yet" 
         : numberOfVotes < voters.length ? `${numberOfVotes} of ${voters?.length} people voted`
