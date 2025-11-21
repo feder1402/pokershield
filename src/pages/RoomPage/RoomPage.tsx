@@ -16,6 +16,7 @@ export default function RoomPage() {
     participantId,
     vote,
     isVotingEnabled,
+    storyTitle,
   } = usePokerRoom();
 
   const handleVote = (vote: string) => {
@@ -34,6 +35,7 @@ export default function RoomPage() {
         roomName={roomName}
         isVotingEnabled={isVotingEnabled || false}
         isModerator={isModerator}
+        storyTitle={storyTitle}
       />
 
       <div className="container mx-auto px-4 py-8">

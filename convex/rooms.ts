@@ -99,3 +99,15 @@ export const enableVoting = mutation({
     console.log(`Voting enabled for room "${args.roomName}"`);
   },
 });
+
+export const updateStoryTitle = mutation({
+  args: { roomName: v.string(), storyTitle: v.string() },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.query("rooms").withIndex("by_room_name", (q) => q.eq("roomName", args.roomName)).first();
+    if (!room) {
+      throw new Error(`Room "${args.roomName}" not found`);
+    }
+    ctx.db.patch(room._id, { storyTitle: args.storyTitle });
+    console.log(`Story title updated for room "${args.roomName}" to "${args.storyTitle}"`);
+  },
+});
