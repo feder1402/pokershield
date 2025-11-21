@@ -4,132 +4,69 @@ Planning Poker for agile teams, built with React, TypeScript, and Vite. Real‑t
 
 ## Features
 
-- Collaborative planning poker rooms
-- Real‑time sync with Convex
-- React 19 + TypeScript
-- Tailwind CSS + shadcn/ui components
-- Zustand for state management
-- React Router for navigation
-
-## Quick Start
-
-Prerequisites:
-
-- Node.js 18+ (20 LTS recommended)
-- npm (included with Node.js)
-
-Install dependencies and start the dev servers (frontend + Convex backend):
-
-```bash
-npm install
-npm run dev
-```
-
-Vite will serve the app at:
-
-- http://localhost:3000/
-
-On first run, the Convex CLI will prompt you to link or create a project and will write environment values to `.env.local`.
-
-## Scripts
-
-- `npm run dev` — Run Convex dev server and Vite in parallel
-- `npm run build` — Build the frontend (Vite)
-- `npm run dev:backend` — Run Convex dev server
-- `npm run dev:frontend` — Run Vite dev server
-- `npm run logs` — Tail Convex logs
-- `npm run lint` — Lint Convex functions and typecheck their TS config
-- `npm run storybook` — Start Storybook on port 6006
-- `npm run build-storybook` — Build Storybook
-
-Preview a production build locally:
-
-```bash
-npm run build
-npx vite preview
-```
-
-## Environment
-
-Convex config is created automatically on first `npm run dev` and saved to `.env.local`:
-
-- `CONVEX_DEPLOYMENT` — Convex deployment name
-- `VITE_CONVEX_URL` — Convex HTTP URL used by the client
-
-If you need to reconfigure, run:
-
-```bash
-npx convex dev --until-success
-```
-
-## Project Structure
-
-- `src/main.tsx` — App bootstrap
-- `src/App.tsx` — App shell and routes
-- `src/pages/` — Pages (`HomePage`, `RoomPage`)
-- `src/lib/room-store.ts` — Zustand store
-- `src/components/ui/` — shadcn/ui components
-- `convex/` — Convex schema, queries, and mutations
-- `tailwind.config.ts` — Tailwind configuration
-- `vite.config.ts` — Vite config with path aliases
-- `tsconfig.json` — TypeScript configuration
-
-Path alias:
-
-- `@/*` → `./src/*`
+- **Collaborative Planning**: Create and join rooms for agile estimation.
+- **Real-time Sync**: Instant updates powered by [Convex](https://www.convex.dev/).
 
 ## Tech Stack
 
-- React 19 + TypeScript
-- Vite 7
-- Convex (realtime backend)
-- Zustand
-- Tailwind CSS + shadcn/ui
-- React Router
-- Lucide React icons
+- **Frontend**: React 19, TypeScript, Vite 7.
+- **Backend**: Convex (Real-time database & functions).
+- **Styling**: Tailwind CSS, shadcn/ui, Lucide React icons.
+- **State Management**: Zustand.
+- **Routing**: React Router.
 
-## Development Notes
+## Getting Started
 
-- First `npm run dev` may prompt Convex project selection and generate `.env.local`.
-- When updating Convex schema, the dev server will typecheck and show errors in the terminal.
-- Storybook is configured via `storybook` with Vite.
+### Prerequisites
+- Node.js 18+ (20 LTS recommended)
 
-## Testing
+### Installation & Running
 
-This project includes Vitest in devDependencies. You can run tests via Vitest CLI:
+1.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-```bash
-npx vitest
-```
+2.  **Start development servers**:
+    ```bash
+    npm run dev
+    ```
+    This runs both the Convex backend and Vite frontend.
+    - Frontend: http://localhost:3000
+    - On first run, Convex will prompt you to configure the project and save environment variables to `.env.local`.
 
-## Building & Deployment
+### Environment Variables
+Configuration is automatic via the Convex CLI. Key variables in `.env.local`:
+- `CONVEX_DEPLOYMENT`: Convex deployment name.
+- `VITE_CONVEX_URL`: Convex HTTP URL.
 
-1) Frontend
+To reconfigure: `npx convex dev --until-success`
 
-- Build with `npm run build` (outputs to `dist/`).
-- Deploy `dist/` to any static host (Vercel, Netlify, GitHub Pages, etc.).
+## Scripts
 
-2) Convex Backend
+| Command | Description |
+| :--- | :--- |
+| `npm run dev` | Run Convex and Vite in parallel |
+| `npm run build` | Build the frontend (Vite) |
+| `npm run lint` | Lint and typecheck |
+| `npm run storybook` | Start Storybook |
+| `npx vitest` | Run tests |
 
-- Deploy Convex separately using the Convex CLI and dashboard.
-- The frontend must point `VITE_CONVEX_URL` to the deployed Convex instance.
+## Project Structure
+
+- `src/` - App source (Pages, Components, Store)
+- `convex/` - Backend schema, queries, and mutations
+- `dist/` - Build output
+
+## Deployment
+
+1.  **Frontend**: Build with `npm run build` and deploy the `dist/` folder to any static host (Vercel, Netlify, etc.).
+2.  **Backend**: Deploy via Convex CLI/Dashboard. Ensure `VITE_CONVEX_URL` is set in your production environment.
 
 ## Contributing
 
-Contributions are welcome! Please:
-
-- Open an issue to discuss significant changes.
-- Use clear commit messages and small PRs when possible.
-- Follow existing code style and conventions.
-
-## Security
-
-If you discover a security issue, please open a private issue or contact the maintainers. Avoid including sensitive details in public issues.
+Contributions welcome! Please open an issue for significant changes and follow existing code styles.
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
-## Copyright
-
- © 2025 Federico Raggi
+MIT License. © 2025 Federico Raggi.
