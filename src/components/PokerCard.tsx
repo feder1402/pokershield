@@ -17,7 +17,7 @@ export function PokerCard({
   value,
   selected = false,
   disabled = false,
-  faceUp =true,
+  faceUp = true,
   onClick,
   className,
   size = "md",
@@ -40,41 +40,75 @@ export function PokerCard({
     lg: "text-5xl",
   }
 
+  const baseCardClasses = cn(
+    "absolute inset-0 rounded-xl",
+    "flex items-center justify-center",
+    "font-bold",
+    "border-2",
+    "shadow-md",
+    "[backface-visibility:hidden]",
+  )
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "relative rounded-xl transition-all duration-200",
-        "flex items-center justify-center",
-        "font-bold",
+        "relative group",
         sizeClasses[size],
-        // Default state
-        "bg-card text-card-foreground",
-        "border-2 border-border",
-        "shadow-md",
-        // Hover state
-        !disabled && !selected && "hover:border-primary hover:shadow-lg hover:-translate-y-2 hover:bg-secondary/90",
-        // Selected state
-        selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
+        // Hover lift effect
+        !disabled && !selected && "hover:-translate-y-2 transition-transform duration-200",
         // Disabled state
-        disabled && "opacity-50 cursor-arrow",
+        disabled && "opacity-50 cursor-not-allowed",
         // Focus state
         !disabled &&
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer",
-        !faceUp && "border-dotted border-primary opacity-20",
-        // Flip animation
-        !isFirstMount.current && "transition-transform duration-600",
-        !faceUp && "[transform:rotateY(180deg)]",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
         className,
       )}
       style={{
-        transformStyle: "preserve-3d",
+        perspective: "1000px",
       }}
       aria-pressed={selected}
       aria-disabled={disabled}
     >
-      <span className={cn("select-none", textSizeClasses[size])}>{value}</span>
+      <div
+        className={cn(
+          "relative w-full h-full",
+          // Flip animation - only apply transition-transform after first mount
+          !isFirstMount.current && "transition-transform duration-[600ms]",
+        )}
+        style={{
+          transformStyle: "preserve-3d",
+          transform: faceUp ? "rotateY(0deg)" : "rotateY(180deg)",
+        }}
+      >
+        {/* Front face */}
+        <div
+          className={cn(
+            baseCardClasses,
+            "bg-card text-card-foreground border-border",
+            // Hover state
+            !disabled && !selected && "group-hover:border-primary group-hover:shadow-lg group-hover:bg-secondary/90",
+            // Selected state
+            selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
+          )}
+        >
+          <span className={cn("select-none", textSizeClasses[size])}>{value}</span>
+        </div>
+
+        {/* Back face */}
+        <div
+          className={cn(
+            baseCardClasses,
+            "bg-card border-dotted border-primary",
+          )}
+          style={{
+            transform: "rotateY(180deg)",
+          }}
+        >
+          {/* Empty back face - could add a pattern or logo here */}
+        </div>
+      </div>
     </button>
   )
 }
