@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useRef } from "react"
 
 interface PokerCardProps {
   value: ReactNode
@@ -22,6 +22,12 @@ export function PokerCard({
   className,
   size = "md",
 }: PokerCardProps) {
+  const isFirstMount = useRef(true)
+
+  useEffect(() => {
+    isFirstMount.current = false
+  }, [])
+
   const sizeClasses = {
     sm: "w-16 h-24",
     md: "w-24 h-36",
@@ -57,8 +63,14 @@ export function PokerCard({
         !disabled &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer",
         !faceUp && "border-dotted border-primary opacity-20",
+        // Flip animation
+        !isFirstMount.current && "transition-transform duration-600",
+        !faceUp && "[transform:rotateY(180deg)]",
         className,
       )}
+      style={{
+        transformStyle: "preserve-3d",
+      }}
       aria-pressed={selected}
       aria-disabled={disabled}
     >
