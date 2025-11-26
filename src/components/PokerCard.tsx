@@ -100,13 +100,53 @@ export function PokerCard({
         <div
           className={cn(
             baseCardClasses,
-            "bg-card border-dotted border-primary",
+            "bg-gradient-to-br from-primary/90 to-primary border-primary",
+            "overflow-hidden",
           )}
           style={{
             transform: "rotateY(180deg)",
           }}
         >
-          {/* Empty back face - could add a pattern or logo here */}
+          {/* Poker card back design */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Decorative border pattern */}
+            <div className="absolute inset-2 border-2 border-primary-foreground/20 rounded-lg" />
+            <div className="absolute inset-3 border border-primary-foreground/10 rounded-md" />
+
+            {/* Corner decorations */}
+            <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-primary-foreground/30 rounded-tl" />
+            <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-primary-foreground/30 rounded-tr" />
+            <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-primary-foreground/30 rounded-bl" />
+            <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-primary-foreground/30 rounded-br" />
+
+            {/* Center shield icon */}
+            <svg
+              viewBox="0 0 24 24"
+              className="w-1/2 h-1/2 text-primary-foreground/80 drop-shadow-lg"
+              fill="currentColor"
+            >
+              <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm0 2.18l6 2.25v5.66c0 4.11-2.71 7.93-6 8.86-3.29-.93-6-4.75-6-8.86V6.43l6-2.25z" />
+              <text
+                x="12"
+                y="14"
+                textAnchor="middle"
+                className="text-[8px] font-bold"
+                fill="currentColor"
+              >
+                PS
+              </text>
+            </svg>
+
+            {/* Background pattern */}
+            <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="card-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <circle cx="10" cy="10" r="1" fill="currentColor" className="text-primary-foreground" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#card-pattern)" />
+            </svg>
+          </div>
         </div>
       </div>
     </button>
