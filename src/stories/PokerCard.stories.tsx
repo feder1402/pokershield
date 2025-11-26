@@ -56,6 +56,15 @@ export const FaceDown: Story = {
 };
 
 export const FlipAnimation: Story = {
+    args: {
+    value: "5",
+    selected: false,
+    disabled: false,
+    faceUp: false,
+    onClick: fn(),
+    className: "",
+    size: "md",
+  },
   render: () => {
     const [faceUp, setFaceUp] = useState(true);
 
