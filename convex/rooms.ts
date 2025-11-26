@@ -47,7 +47,7 @@ export const isVotingEnabled = query({
 
 export const getVotes = query({
   args: { roomName: v.optional(v.string()) },
-  returns: v.array(v.object({ hasVoted: v.boolean(), vote: v.optional(v.string()), isVotingParticipant: v.boolean()})),
+  returns: v.array(v.object({ voterId: v.id("participants"), hasVoted: v.boolean(), vote: v.optional(v.string()), isVotingParticipant: v.boolean()})),
   handler: async (ctx, args) => {
     if (!args.roomName) {
       return [];
@@ -67,6 +67,7 @@ export const getVotes = query({
       .collect();
 
     const votes = participants.filter((participant) => participant.isVotingParticipant).map((participant) => ({
+      voterId: participant._id,
       hasVoted: participant.vote !== undefined,
       vote: room.isVotingEnabled ? undefined : participant.vote, // Do not return vote while voting is enabled
       isVotingParticipant: participant.isVotingParticipant,
