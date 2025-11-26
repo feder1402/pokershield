@@ -58,18 +58,15 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
         : numberOfVotes === voters.length && "Everybody Voted"}
       </p>
       <div className="space-y-2 flex flex-wrap justify-center  gap-4 mx-auto">
-        {voters?.map(({ hasVoted, vote }, idx) =>
-          isVotingEnabled ? (
-            <PokerCard
-              key={idx}
-              value={hasVoted ? <Check /> : ""}
-              size="md"
-              disabled={true}
-            />
-          ) : (
-            <PokerCard key={idx} value={vote} size="md" disabled={true} />
-          )
-        )}
+        {voters?.map(({ hasVoted, vote }, idx) => (
+          <PokerCard
+            key={idx}
+            value={isVotingEnabled ? (hasVoted ? <Check /> : "") : vote}
+            faceUp={!isVotingEnabled}
+            size="md"
+            disabled={true}
+          />
+        ))}
       </div>
       {!isVotingEnabled && (
         <div id="confettiReward">
