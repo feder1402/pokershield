@@ -4,7 +4,6 @@ import {
   Copy,
   Check,
   PartyPopper,
-  ArrowLeft,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -60,7 +59,7 @@ export function RoomHeader({
   };
 
   return (
-    <header className="border-b border-border">
+    <header className="bg-foreground border-b border-border/20">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-4 w-full">
@@ -68,19 +67,19 @@ export function RoomHeader({
               to="/"
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
             >
-              <Shield className="h-6 w-6 text-primary" />
-              <span className="text-xl font-bold hidden md:inline">PokerShield</span>
+              <Shield className="h-6 w-6 text-primary-foreground" />
+              <span className="text-xl font-bold hidden md:inline text-background">PokerShield</span>
             </Link>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground hidden sm:inline">Room:</span>
-              <code className="bg-muted px-2 py-1 rounded text-sm font-mono">
+              <span className="text-background/70 hidden sm:inline">Room:</span>
+              <code className="bg-background/20 px-2 py-1 rounded text-sm font-mono text-background">
                 {roomName}
               </code>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={onCopyRoomUrl}
-                className="h-8 w-8 p-0"
+                className="h-8 w-8 p-0 text-background hover:bg-background/20"
               >
                 {copied ? (
                   <Check className="h-4 w-4" />
@@ -91,14 +90,14 @@ export function RoomHeader({
             </div>
 
             {/* Story Title Section */}
-            <div className="flex items-center gap-2 ml-4 border-l pl-4 border-border">
-              <span className="text-muted-foreground hidden sm:inline">Story:</span>
+            <div className="flex items-center gap-2 ml-4 border-l pl-4 border-background/20">
+              <span className="text-background/70 hidden sm:inline">Story:</span>
               {isEditingTitle ? (
                 <div className="flex items-center gap-2">
                   <Input
                     value={newStoryTitle}
                     onChange={(e) => setNewStoryTitle(e.target.value)}
-                    className="h-8 w-64 font-bold"
+                    className="h-8 w-64 font-bold bg-background text-foreground"
                     placeholder="Enter story title..."
                     autoFocus
                     onBlur={handleSaveTitle}
@@ -113,7 +112,7 @@ export function RoomHeader({
                   className={`flex items-center gap-2 ${isModerator ? "cursor-pointer hover:opacity-80" : ""}`}
                   onClick={() => isModerator && setIsEditingTitle(true)}
                 >
-                  <span className="text-lg font-bold text-foreground">
+                  <span className="text-lg font-bold text-background">
                     {storyTitle || (isModerator ? "Click to add story title" : "")}
                   </span>
                 </div>
@@ -125,16 +124,16 @@ export function RoomHeader({
              {numberOfParticipants > 1 && (
             <div className="hidden lg:flex items-center justify-center gap-2 mr-4">
               {isVotingEnabled ? (
-                <span className="text-md text-foreground font-bold">
+                <span className="text-md text-background font-bold">
                   Start Voting!
                 </span>
               ) : (
                 <>
                   <PartyPopper
-                    className="h-4 w-4 text-muted-foreground"
+                    className="h-4 w-4 text-background/70"
                     size={20}
                   />
-                  <span className="text-md text-muted-foreground font-bold">
+                  <span className="text-md text-background/70 font-bold">
                     Voting Results
                   </span>
                 </>
@@ -142,11 +141,11 @@ export function RoomHeader({
             </div>
           )}
             <div className="flex items-center gap-2">
-              <span className="text-sm">{numberOfParticipants}</span>
-              <Users className="h-4 w-4 text-muted-foreground" />
-              {isModerator && <Badge variant="secondary" className="hidden sm:inline-flex">Moderator</Badge>}
+              <span className="text-sm text-background">{numberOfParticipants}</span>
+              <Users className="h-4 w-4 text-background/70" />
+              {isModerator && <Badge variant="secondary" className="hidden sm:inline-flex bg-background/20 text-background">Moderator</Badge>}
             </div>
-            <ThemeToggle />
+            <ThemeToggle className="text-background hover:bg-background/20" />
           </div>
         </div>
       </div>
