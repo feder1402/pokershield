@@ -6,6 +6,7 @@ import { ReactNode, useEffect, useRef } from "react"
 interface PokerCardProps {
   value: ReactNode
   selected?: boolean
+  placeholder?: boolean
   disabled?: boolean
   faceUp?: boolean
   onClick?: () => void
@@ -18,6 +19,7 @@ export function PokerCard({
   selected = false,
   disabled = false,
   faceUp = true,
+  placeholder = false,
   onClick,
   className,
   size = "md",
@@ -63,6 +65,7 @@ export function PokerCard({
         // Focus state
         !disabled &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
+        placeholder && "border-dashed border-border border-6",
         className,
       )}
       style={{
@@ -91,6 +94,7 @@ export function PokerCard({
             !disabled && !selected && "group-hover:border-primary group-hover:shadow-lg group-hover:bg-secondary/90",
             // Selected state
             selected && "bg-primary text-primary-foreground border-primary shadow-xl scale-105",
+            placeholder && "invisible",
           )}
         >
           <span className={cn("select-none", textSizeClasses[size])}>{value}</span>
@@ -102,6 +106,7 @@ export function PokerCard({
             baseCardClasses,
             "bg-gradient-to-br from-primary/90 to-primary border-primary",
             "overflow-hidden",
+            placeholder && "invisible",
           )}
           style={{
             transform: "rotateY(180deg)",

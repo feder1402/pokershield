@@ -63,6 +63,7 @@ export function VotingResults({ room, isVotingEnabled }: VotingResultsProps) {
             key={idx}
             value={isVotingEnabled ? (hasVoted ? <Check /> : "") : vote}
             faceUp={!isVotingEnabled}
+            placeholder={!hasVoted}
             size="md"
             disabled={true}
           />
