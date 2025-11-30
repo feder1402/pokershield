@@ -61,7 +61,7 @@ export function PokerCard({
         // Hover lift effect
         !disabled && !selected && "hover:-translate-y-2 transition-transform duration-200",
         // Disabled state
-        disabled && "opacity-50 cursor-not-allowed",
+        disabled && "cursor-not-allowed",
         // Focus state
         !disabled &&
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer",
@@ -104,7 +104,7 @@ export function PokerCard({
         <div
           className={cn(
             baseCardClasses,
-            "bg-gradient-to-br from-primary/90 to-primary border-primary",
+            "bg-radial from-purple-900 to-violet-500 border-primary",
             "overflow-hidden",
             placeholder && "invisible",
           )}
@@ -143,14 +143,14 @@ export function PokerCard({
             </svg>
 
             {/* Background pattern */}
-            <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+            {/* <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <pattern id="card-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
                   <circle cx="10" cy="10" r="1" fill="currentColor" className="text-primary-foreground" />
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#card-pattern)" />
-            </svg>
+            </svg> */}
           </div>
         </div>
       </div>
