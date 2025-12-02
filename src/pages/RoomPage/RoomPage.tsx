@@ -1,7 +1,7 @@
 import { RoomHeader } from "./RoomHeader";
 import usePokerRoom from "@/hooks/usePokerRoom";
 import { EstimationCardSelector } from "./EstimationCardSelector";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { VotingResults } from "./VotingResults";
 import { ModeratorControls } from "./ModeratorControls";
@@ -14,7 +14,6 @@ export default function RoomPage() {
   const setVote = useMutation(api.participants.setVote);
 
   const {
-    room,
     numberOfParticipants,
     isModerator,
     participantId,
@@ -22,10 +21,6 @@ export default function RoomPage() {
     isVotingEnabled,
     storyTitle,
   } = usePokerRoom(roomName);
-
-  if (!room) {
-    return <RoomNotFoundCard />;
-  }
 
   const handleVote = (vote: string) => {
     participantId && setVote({ participantId, vote });
@@ -46,7 +41,7 @@ export default function RoomPage() {
         storyTitle={storyTitle}
       />
 
-        <div className="max-w-6xl mx-auto flex-1 flex flex-col">
+        <div className="max-w-6xl mx-auto px-4 py-8 flex-1 flex flex-col">
 
           <div className="flex-1 flex flex-col justify-center">
             {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled!} />}

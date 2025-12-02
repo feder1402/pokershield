@@ -121,25 +121,6 @@ export function RoomHeader({
           </div>
 
           <div className="flex items-center gap-4 justify-end">
-             {numberOfParticipants > 1 && (
-            <div className="hidden lg:flex items-center justify-center gap-2 mr-4">
-              {isVotingEnabled ? (
-                <span className="text-md text-background font-bold">
-                  Start Voting!
-                </span>
-              ) : (
-                <>
-                  <PartyPopper
-                    className="h-4 w-4 text-background/70"
-                    size={20}
-                  />
-                  <span className="text-md text-background/70 font-bold">
-                    Voting Results
-                  </span>
-                </>
-              )}
-            </div>
-          )}
             <div className="flex items-center gap-2">
               <span className="text-sm text-background">{numberOfParticipants}</span>
               <Users className="h-4 w-4 text-background/70" />
