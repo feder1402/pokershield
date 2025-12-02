@@ -59,10 +59,10 @@ export function RoomHeader({
   };
 
   return (
-    <header className="bg-foreground border-b border-border/20">
-      <div className="container mx-auto px-4 py-4">
+    <header className="min-w-full bg-foreground border-b border-border/20">
+      <div className="mx-auto px-4 py-4 md:px-8">
         <div className="flex items-center justify-between">
-          <div className="flex items-start gap-4 w-full">
+          <div className="flex items-center gap-4 ">
             <Link
               to="/"
               className="flex items-center gap-2 hover:opacity-80 transition-opacity"
