@@ -26,7 +26,7 @@ export function ModeratorControls({ room, isVotingEnabled }: ModeratorControlsPr
     <div className="flex justify-center gap-4">
     <Button
       onClick={handleReset}
-      variant="outline"
+      variant="destructive"
     >
       <RotateCcw />
       Restart
