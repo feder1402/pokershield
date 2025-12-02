@@ -29,7 +29,7 @@ export default function RoomPage() {
   // }
 
   return (
-    <div className="min-h-screen bg-background grid-bg">
+    <div className="min-h-screen bg-background grid-bg flex flex-col">
       <RoomHeader
         numberOfParticipants={numberOfParticipants || 0}
         roomName={roomName}
@@ -38,20 +38,22 @@ export default function RoomPage() {
         storyTitle={storyTitle}
       />
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto px-4 py-8 flex-1 flex flex-col">
+        <div className="max-w-6xl mx-auto flex-1 flex flex-col">
+
+          <div className="flex-1 flex flex-col justify-center">
+            {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled!} />}
+
+            <div className="mt-8">
+              {isModerator && roomName &&<ModeratorControls room={roomName} isVotingEnabled={isVotingEnabled!} />}
+            </div>
+          </div>
 
           <EstimationCardSelector
             enabled={isVotingEnabled || false}
             votedValue={vote}
             onVote={handleVote}
           />
-
-          {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled!} />}
-
-          <div className="mt-8">
-            {isModerator && roomName &&<ModeratorControls room={roomName} isVotingEnabled={isVotingEnabled!} />}
-          </div>
         </div>
       </div>
     </div>
