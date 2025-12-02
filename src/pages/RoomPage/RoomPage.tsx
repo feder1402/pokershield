@@ -6,7 +6,6 @@ import { api } from "../../../convex/_generated/api";
 import { VotingResults } from "./VotingResults";
 import { ModeratorControls } from "./ModeratorControls";
 import { useParams } from "react-router-dom";
-import { RoomNotFoundCard } from "./RoomNotFoundCard";
 
 export default function RoomPage() {
   const params = useParams();
@@ -26,10 +25,6 @@ export default function RoomPage() {
     participantId && setVote({ participantId, vote });
     console.log("Voted: ", vote);
   };
-
-  // if (roomName === undefined || participantId === undefined) {
-  //   return <RoomNotFoundCard />;
-  // }
 
   return (
     <div className="min-h-screen flex flex-col">
