@@ -39,10 +39,10 @@ export default function RoomPage() {
         <div className="max-w-6xl mx-auto px-4 py-8 flex-1 flex flex-col">
 
           <div className="flex-1 flex flex-col justify-center">
-            {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled!} />}
+            {roomName && <VotingResults room={roomName} isVotingEnabled={isVotingEnabled ?? false} />}
 
             <div className="mt-8">
-              {isModerator && roomName &&<ModeratorControls room={roomName} isVotingEnabled={isVotingEnabled!} />}
+              {isModerator && roomName &&<ModeratorControls room={roomName} isVotingEnabled={isVotingEnabled ?? false} />}
             </div>
           </div>
 
