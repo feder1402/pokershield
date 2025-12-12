@@ -57,14 +57,16 @@ export default function RoomPage() {
 
       <div className="max-w-6xl mx-auto px-4 py-8 flex-1 flex flex-col">
         {/* Story Title Section (moved from header) */}
-        <div className="flex items-center justify-center gap-2 ml-4 border-l border-background/20 pl-4 pr-4 py-2 rounded-md bg-card/50 text-foreground">
-          <span className="hidden sm:inline text-foreground">Story:</span>
+        <div className="flex items-center justify-center gap-3 ml-4 border-l border-background/20 pl-6 pr-6 py-3 rounded-lg bg-card/50 text-foreground">
+          <span className="hidden sm:inline text-base font-medium text-foreground">
+            Story:
+          </span>
           {isEditingTitle ? (
             <div className="flex items-center gap-2">
               <Input
                 value={newStoryTitle}
                 onChange={(e) => setNewStoryTitle(e.target.value)}
-                className="h-8 w-64 font-bold bg-background text-foreground"
+                className="h-10 w-80 text-lg font-bold bg-background text-foreground"
                 placeholder="Enter story title..."
                 autoFocus
                 onBlur={handleSaveTitle}
@@ -81,7 +83,7 @@ export default function RoomPage() {
               }`}
               onClick={() => isModerator && setIsEditingTitle(true)}
             >
-              <span className="text-lg font-bold text-foreground">
+              <span className="text-xl font-bold text-foreground">
                 {storyTitle || (isModerator ? "Click to add story title" : "")}
               </span>
             </div>
