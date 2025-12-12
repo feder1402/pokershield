@@ -3,59 +3,32 @@ import {
   Users,
   Copy,
   Check,
-  PartyPopper,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useMutation } from "convex/react";
-import { api } from "../../../convex/_generated/api";
+import { useState } from "react";
 
 interface RoomHeaderProps {
   numberOfParticipants: number;
   roomName?: string;
-  isVotingEnabled: boolean;
   isModerator: boolean;
-  storyTitle?: string;
 }
 
 export function RoomHeader({
   numberOfParticipants,
   roomName,
-  isVotingEnabled,
   isModerator,
-  storyTitle,
 }: RoomHeaderProps) {
   const [copied, setCopied] = useState(false);
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [newStoryTitle, setNewStoryTitle] = useState(storyTitle || "");
-  const updateStoryTitle = useMutation(api.rooms.updateStoryTitle);
-
-  useEffect(() => {
-    setNewStoryTitle(storyTitle || "");
-  }, [storyTitle]);
 
   const onCopyRoomUrl = async () => {
     const url = window.location.href;
     await navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleSaveTitle = async () => {
-    if (roomName) {
-      await updateStoryTitle({ roomName, storyTitle: newStoryTitle });
-      setIsEditingTitle(false);
-    }
-  };
-
-  const handleCancelEdit = () => {
-    setNewStoryTitle(storyTitle || "");
-    setIsEditingTitle(false);
   };
 
   return (
@@ -87,36 +60,6 @@ export function RoomHeader({
                   <Copy className="h-4 w-4" />
                 )}
               </Button>
-            </div>
-
-            {/* Story Title Section */}
-            <div className="flex items-center gap-2 ml-4 border-l pl-4 border-background/20">
-              <span className="text-background/70 hidden sm:inline">Story:</span>
-              {isEditingTitle ? (
-                <div className="flex items-center gap-2">
-                  <Input
-                    value={newStoryTitle}
-                    onChange={(e) => setNewStoryTitle(e.target.value)}
-                    className="h-8 w-64 font-bold bg-background text-foreground"
-                    placeholder="Enter story title..."
-                    autoFocus
-                    onBlur={handleSaveTitle}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") handleSaveTitle();
-                      if (e.key === "Escape") handleCancelEdit();
-                    }}
-                  />
-                </div>
-              ) : (
-                <div 
-                  className={`flex items-center gap-2 ${isModerator ? "cursor-pointer hover:opacity-80" : ""}`}
-                  onClick={() => isModerator && setIsEditingTitle(true)}
-                >
-                  <span className="text-lg font-bold text-background">
-                    {storyTitle || (isModerator ? "Click to add story title" : "")}
-                  </span>
-                </div>
-              )}
             </div>
           </div>
 
